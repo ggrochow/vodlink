@@ -41,3 +41,10 @@ Consider adding constraints on foreign keys.
     * lol_match_id
     * twitch_vod_id
     * timestamp
+
+* jobs
+    * id
+    * job_type
+    * status
+    * payload
+    * errors

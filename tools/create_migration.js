@@ -5,7 +5,7 @@
  */
 
 const fs = require("fs");
-const MIGRATION_FOLDER_PATH = "DB/migrations/"; // From project root
+const MIGRATION_FOLDER_PATH = "DB/setup/migrations/"; // From project root
 
 let timestamp = new Date().getTime();
 let argv_name = process.argv[2] || "";

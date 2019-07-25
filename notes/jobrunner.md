@@ -21,7 +21,7 @@
 
 ### Jobs DB table
 
-job_type | status | payload 
+ID | job_type | status | payload | errors 
 
 ### Runner
 
