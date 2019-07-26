@@ -46,7 +46,9 @@ ACCOUNTS.forEach( accountObj => {
     };
 
     jobUtils.createNewJob(jobType, payload)
-        .then(res => console.log(JSON.stringify(res, null, 4)))
+        .then(res => {
+            console.log(`job ID ${res.rows.id} created with type ${jobType} and payload ${payload}`);
+        })
         .catch(e => console.log(JSON.stringify(e, null, 4)));
 });
 
