@@ -1,17 +1,17 @@
-CREATE TABLE twitch_channel (
+CREATE TABLE twitch_channels (
     id                  serial      PRIMARY KEY,
     native_channel_id   BIGINT      UNIQUE NOT NULL,
     channel_name        VARCHAR     UNIQUE NOT NULL
 );
 
-CREATE TABLE lol_summoner (
+CREATE TABLE lol_summoners (
     id                  serial      PRIMARY KEY,
     native_summoner_id  VARCHAR     UNIQUE NOT NULL,
     summoner_name       VARCHAR     UNIQUE NOT NULL,
     twitch_channel_id   INTEGER     NOT NULL
 );
 
-CREATE TABLE twitch_vod (
+CREATE TABLE twitch_vods (
     id                  serial      PRIMARY KEY,
     started_at          TIMESTAMP   NOT NULL,
     ended_at            TIMESTAMP   NOT NULL,
@@ -19,7 +19,7 @@ CREATE TABLE twitch_vod (
     native_vod_id       BIGINT      UNIQUE NOT NULL
 );
 
-CREATE TABLE lol_match (
+CREATE TABLE lol_matches (
     id                  serial      PRIMARY KEY,
     native_match_id     BIGINT      UNIQUE NOT NULL,
     winning_team        SMALLINT    NOT NULL,
@@ -27,7 +27,7 @@ CREATE TABLE lol_match (
     ended_at            TIMESTAMP   NOT NULL
 );
 
-CREATE TABLE lol_match_participant (
+CREATE TABLE lol_match_participants (
     id                  serial      PRIMARY KEY,
     lol_match_id        INTEGER     NOT NULL,
     team_id             SMALLINT    NOT NULL,
@@ -38,7 +38,7 @@ CREATE TABLE lol_match_participant (
     native_summoner_id  VARCHAR     NOT NULL
 );
 
-CREATE TABLE lol_match_twitch_vod (
+CREATE TABLE lol_match_twitch_vods (
     id                  serial      PRIMARY KEY,
     lol_match_id        INTEGER     NOT NULL,
     twitch_vod_id       INTEGER     UNIQUE NOT NULL,

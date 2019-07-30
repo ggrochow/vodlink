@@ -1,40 +1,82 @@
 const twitchApi = require('../../external_apis/twitch');
+const jobTypes = require("../job_types");
+const Job = require("./job");
+const db = require('../../database');
 
-class FetchTwitchChannelIdJob {
+class FetchTwitchChannelIdJob extends Job {
 
-    jobRows = {};
-
-    constructor(jobRows) {
-        this.jobRows = jobRows;
-    }
-
-    get payload() {
-        return this.jobRows.payload;
-    }
     get channelName() {
-        return this.payload.twitch_name;
+        return this.payload.twitchName;
     }
 
-    handleApiError(e) {
-        // check status code,
-        // if 429 ( rate limit hit ) set job to retry.
-        // set job to error.
+    get lolAccounts() {
+        return this.payload.lolAccounts
     }
 
-    handleSQLerror(e) {
-        // set to error,
+    async run() {
+        console.log(`Job - ${this.shortName} starting run`);
+        let apiResult;
+
+        try {
+            apiResult = await twitchApi.getUserInfoFromChannelName(this.channelName);
+        } catch (apiError) {
+           this.errors = `error while fetching twitch channel info - ${apiError.message}`;
+            console.error(apiError.message);
+            console.error(this.errors);
+            console.error(apiError);
+            return this;
+            // Set relevant errors on job, return it.
+        }
+
+        if (apiResult === undefined || apiResult.data.length === 0 || apiResult.data[0].id === undefined) {
+            // No results found for name, error this.
+            this.errors = `No twitch channel with the username ${this.channelName} found via twitchapi`;
+            console.error(this.errors);
+            return this;
+        }
+
+        let nativeTwitchId = apiResult.data[0].id;
+        console.log(`Job - ${this.shortName} found native twitch ID for ${this.channelName} - id: ${nativeTwitchId} `);
+
+        let twitchAccount;
+        try {
+            twitchAccount = await db.twitchAccounts.createNewTwitchAccount(this.channelName, nativeTwitchId);
+        } catch (sqlErr) {
+            this.errors = `SQL error while saving twitch account - ${sqlErr.message}`;
+            console.error(sqlErr.message);
+            console.error(this.errors);
+            console.error(sqlErr);
+            return this;
+        }
+
+        console.log(`Job - ${this.shortName} inserted twitch_account with ID - ${twitchAccount.id}`);
+
+        const twitchChannelId = twitchAccount.id;
+        for (let lolAccountInfo of this.lolAccounts) {
+            let payload = {
+                twitchChannelId,
+                summonerName: lolAccountInfo.name,
+                summonerRegion: lolAccountInfo.region,
+            };
+
+            try {
+                console.log(`Job - ${this.shortName} creating new ${jobTypes.FETCH_LOL_SUMMONER_ID} job for summoner ${lolAccountInfo.name} on ${lolAccountInfo.region} region`);
+                await db.jobs.createNewJob(jobTypes.FETCH_LOL_SUMMONER_ID, payload);
+            } catch (sqlErr) {
+                // do we rollback if it doesnt work? idk
+                this.errors = `SQL error saving ${jobTypes.FETCH_LOL_SUMMONER_ID} job, ${sqlErr.message}`;
+                console.error(sqlErr.message);
+                console.error(this.errors);
+                console.error(sqlErr);
+                return this;
+            }
+        }
+
+        console.log(`Job - ${this.shortName} completed`);
+        return this;
+
     }
 
-    run() {
-        let request = twitchApi.getUserInfoFromChannelName(this.channelName)
-            .then(res => {
-                let id = res.data[0].id;
-                // Create `twitch_channel` entry in Db
-                // .then
-                // create `FIND_LOL_ACCOUNT_BY_NAME` job for each lol account.
-            })
-            .catch(this.handleApiError);
-    }
 }
 
 module.exports = FetchTwitchChannelIdJob;

@@ -1,11 +1,11 @@
 /*
-    Creates empty migration .sql files in the DB/Migrations folder.
+    Creates empty migration .sql files in the database/Migrations folder.
     Naming scheme is timestamp_providedname.sql
     Provide names via ARGV
  */
 
 const fs = require("fs");
-const MIGRATION_FOLDER_PATH = "DB/setup/migrations/"; // From project root
+const MIGRATION_FOLDER_PATH = "database/setup/migrations/"; // From project root
 
 let timestamp = new Date().getTime();
 let argv_name = process.argv[2] || "";

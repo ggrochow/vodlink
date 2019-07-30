@@ -6,4 +6,15 @@ const jobs = {
     [jobTypes.FETCH_TWITCH_CHANNEL_ID]: FetchTwitchChannelId,
 };
 
-module.exports = jobs;
+function instantiateJob(jobRows) {
+    let JobClass = jobs[jobRows.job_type];
+
+    return new JobClass(jobRows);
+}
+
+module.exports = {
+    jobs,
+    instantiateJob,
+};
+
+

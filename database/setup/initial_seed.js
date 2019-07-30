@@ -3,7 +3,7 @@
     Adds twitch channels & respective LoL accounts to database for job queue to do its thing.
  */
 
-const jobUtils = require('../../job_system/job_utils.js');
+const db = require('../index');
 const JOB_TYPES = require('../../job_system/job_types.js');
 
 const ACCOUNTS = [
@@ -41,14 +41,11 @@ const ACCOUNTS = [
 ACCOUNTS.forEach( accountObj => {
     let jobType = JOB_TYPES.FETCH_TWITCH_CHANNEL_ID;
     let payload = {
-        twitch_name: accountObj.twitch_name,
-        lol_accounts: accountObj.lol_accounts,
+        twitchName: accountObj.twitch_name,
+        lolAccounts: accountObj.lol_accounts,
     };
 
-    jobUtils.createNewJob(jobType, payload)
-        .then(res => {
-            console.log(`job ID ${res.rows.id} created with type ${jobType} and payload ${payload}`);
-        })
+    db.jobs.createNewJob(jobType, payload)
         .catch(e => console.log(JSON.stringify(e, null, 4)));
 });
 
