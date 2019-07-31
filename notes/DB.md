@@ -12,6 +12,7 @@ Consider adding constraints on foreign keys.
     * native_summoner_id
     * summoner_name
     * twitch_channel_id
+    * region
 
 * twitch_vod
     * id

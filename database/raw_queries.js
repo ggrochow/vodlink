@@ -1,7 +1,7 @@
 /*
     Various database utility functions
  */
-
+const logger = require('../utils/logger');
 const pgp = require("pg-promise")();
 const db = pgp({
     host: process.env.PGHOST,
@@ -13,7 +13,7 @@ const db = pgp({
 
 // Returns a Promise object
 function query(text, params) {
-    console.log(pgp.as.format(text, params));
+    logger.debug(`SQL: ${pgp.as.format(text, params)}`);
     return db.query(text, params);
 }
 

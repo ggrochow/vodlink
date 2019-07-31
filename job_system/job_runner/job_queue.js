@@ -1,9 +1,16 @@
 const jobs = require('../jobs');
 const db = require('../../database');
+const logger = require('../../utils/logger');
 
 // Setup two queues, with different 'rate limits' to wait between each job
 // Each queue will look at the database for jobs that use its API, maybe pass in a list of job types to search?
 
+/**
+ * JobQueue
+ * Used to run all our jobs that query APIs at a rate that will prevent rate limits from getting hit
+ *
+ * Usage: invoke the run() function in a setTimeout loop.
+ */
 class JobQueue {
 
     /**
@@ -21,7 +28,7 @@ class JobQueue {
     }
 
     async runJob(jobRows) {
-        console.log(`Job Queue ${this.name} starting runJob( job - ${jobRows.id} )`);
+        logger.verbose(`Job Queue ${this.name} starting runJob( id: ${jobRows.id} )`);
 
         let job = jobs.instantiateJob(jobRows);
         this.currentJob = job;
@@ -30,7 +37,7 @@ class JobQueue {
             await db.jobs.setJobToRunning(job.id);
         } catch (err) {
             // TODO
-            console.error(err.message);
+            logger.error(err.message);
             console.error(err);
         }
 
@@ -38,7 +45,7 @@ class JobQueue {
             job = await job.run();
         } catch (err) {
             // TODO
-            console.error(err.message);
+            logger.error(err.message);
             console.error(err);
             // Job should handle its own API/DB related errors, if it gets here something bad happened.
         }
@@ -47,13 +54,13 @@ class JobQueue {
     }
 
     async finishJob(job) {
-        console.log(`Job Queue ${this.name} starting finishJob( job - ${job.id} )`);
+        logger.verbose(`Job Queue ${this.name} starting finishJob( id: ${job.id} )`);
 
         try {
             await db.jobs.setJobToFinished(job.id);
         } catch (err) {
             // TODO
-            console.error(err.message);
+            logger.error(err.message);
             console.error(err);
         }
 
@@ -61,14 +68,25 @@ class JobQueue {
         this.currentJob = null;
     }
 
-    errorJob(job) {
-        console.log(`Job Queue ${this.name} starting errorJob( job - ${job.id} )`);
+    async errorJob(job) {
+        logger.verbose(`Job Queue ${this.name} starting errorJob( id: ${job.id} )`);
+
+        try {
+            await db.jobs.setJobToError(job.id, job.errors)
+        } catch (err) {
+            // TODO
+            logger.error(err.message);
+            console.error(err);
+        }
+
+        this.timeOfLastFinishedJob = new Date().getTime();
+        this.currentJob = null;
         // something bad happened with the job
         // set to ERROR with messages in block
     }
 
     getNewJob() {
-        console.log(`Job Queue ${this.name} starting getNewJob()`);
+        logger.verbose(`Job Queue ${this.name} starting getNewJob()`);
         return db.jobs.getRunnableJobOfType(this.jobTypeArray);
     }
 
@@ -85,9 +103,8 @@ class JobQueue {
         return (noPreviousJobs || minimumIntervalPassed);
     }
 
-    // run this in a setInterval
     async run() {
-        console.log(`Job Queue ${this.name} starting run()`);
+        logger.verbose(`Job Queue ${this.name} starting run()`);
 
         if (this.isJobRunning() || !this.isReadyForNextJob()) {
             // nothing to do if we have a job, or we haven't waited enough for rate limit.
@@ -97,7 +114,8 @@ class JobQueue {
         try {
             let job = await this.getNewJob();
             if (job === undefined) {
-                return
+                return;
+                // Consider adding some sort of wait period if we get here to prevent unneeded db select spam
             }
 
             job = await this.runJob(job);
@@ -110,7 +128,7 @@ class JobQueue {
 
         } catch (err) {
             // TODO
-            console.error(err.message);
+            logger.error(err.message);
             console.error(err);
         }
 

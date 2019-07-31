@@ -36,10 +36,18 @@ function setJobToStatus(id, status) {
     return db.queryOne(query, params);
 }
 
+function setJobToError(id, errors) {
+    let query = "UPDATE jobs SET (status, errors) = ($1, $2) WHERE id = $3 RETURNING *";
+    let params = [jobStatusTypes.ERROR, errors, id];
+
+    return db.queryOne(query, params);
+}
+
 module.exports = {
     createNewJob,
     getRunnableJobOfType,
     setJobToRunning,
     setJobToFinished,
+    setJobToError,
 };
 

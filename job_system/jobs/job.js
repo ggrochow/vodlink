@@ -1,3 +1,5 @@
+const logger = require('../../utils/logger');
+
 /**
  * Job for shared functions, to be subclassed from, don't use directly
  * run() must be overwritten by the subclasses implementation
@@ -26,6 +28,14 @@ class Job {
 
     get id() {
         return this.jobRows.id;
+    }
+
+    logPrefix() {
+        return `Job id: ${this.id} - ${this.shortName}`;
+    }
+
+    logErrors() {
+        logger.error(`${this.logPrefix()} - ${this.errors}`);
     }
 
     run() {

@@ -8,6 +8,7 @@ CREATE TABLE lol_summoners (
     id                  serial      PRIMARY KEY,
     native_summoner_id  VARCHAR     UNIQUE NOT NULL,
     summoner_name       VARCHAR     UNIQUE NOT NULL,
+    region              VARCHAR     NOT NULL,
     twitch_channel_id   INTEGER     NOT NULL
 );
 

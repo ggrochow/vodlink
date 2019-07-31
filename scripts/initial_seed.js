@@ -2,16 +2,18 @@
     Initial seed file for database.
     Adds twitch channels & respective LoL accounts to database for job queue to do its thing.
  */
+require('dotenv').config();
 
-const db = require('../index');
-const JOB_TYPES = require('../../job_system/job_types.js');
+const regions = require('../external_apis/lol/regions');
+const db = require('../database');
+const JOB_TYPES = require('../job_system/job_types.js');
 
 const ACCOUNTS = [
     {
         twitch_name: 'c9sneaky',
         lol_accounts: [
             {
-                region: 'NA',
+                region: regions.NA,
                 name: 'C9 Sneaky'
             },
         ]
@@ -20,7 +22,7 @@ const ACCOUNTS = [
         twitch_name: 'voyboy',
         lol_accounts: [
             {
-                region: 'NA',
+                region: regions.NA,
                 name: 'VoyBoy'
             },
 
@@ -30,7 +32,7 @@ const ACCOUNTS = [
         twitch_name: 'faker',
         lol_accounts: [
             {
-                region: 'KR',
+                region: regions.KR,
                 name: 'Hide on bush'
             }
         ]
@@ -46,6 +48,6 @@ ACCOUNTS.forEach( accountObj => {
     };
 
     db.jobs.createNewJob(jobType, payload)
-        .catch(e => console.log(JSON.stringify(e, null, 4)));
+        .catch(e => console.error(JSON.stringify(e, null, 4)));
 });
 

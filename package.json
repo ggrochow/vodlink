@@ -4,15 +4,17 @@
   "description": "postgres 11.4\r node 12.6.0",
   "main": "job_system/job_runner/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "create_migration": "node tools/create_migration.js"
+    "create_migration": "node scripts/create_migration.js",
+    "seed_database": "node scripts/initial_seed.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "dotenv": "^8.0.0",
+    "pg": "^7.12.0",
     "pg-promise": "^9.0.0",
     "request": "^2.88.0",
-    "request-promise-native": "^1.0.7"
+    "request-promise-native": "^1.0.7",
+    "winston": "^3.2.1"
   }
 }
