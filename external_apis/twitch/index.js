@@ -19,13 +19,29 @@ function request(url, queryParams) {
 
 // Get user info by twitch name
 // GET https://api.twitch.tv/helix/users?login=XXXXXXX
-function getUserInfoFromChannelName(channel_name) {
+function getUserInfoFromChannelName(channelName) {
     let url = `${NEW_API_BASE_URL}/users`;
-    let queryParams = { login: channel_name };
+    let queryParams = { login: channelName };
+
+    return request(url, queryParams);
+}
+
+function getVodsForChannel(nativeChannelId, cursor) {
+    let url = `${NEW_API_BASE_URL}/videos`;
+
+    let queryParams = {
+        user_id: nativeChannelId,
+        first: 100,
+        type: 'archive',
+    };
+    if (cursor !== undefined) {
+        queryParams.after = cursor;
+    }
 
     return request(url, queryParams);
 }
 
 module.exports = {
     getUserInfoFromChannelName,
+    getVodsForChannel,
 };

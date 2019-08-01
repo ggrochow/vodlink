@@ -20,6 +20,7 @@ class JobQueue {
      */
     constructor(jobTypeArray, rateLimitMs, name) {
         this.timeOfLastFinishedJob = null;
+        this.timeOfLastNoJobsFound = null;
         this.currentJob = null;
 
         this.jobTypeArray = jobTypeArray;
@@ -94,6 +95,17 @@ class JobQueue {
         return this.currentJob !== null;
     }
 
+    // Wait an arbitrary amount of time if we don't find any results.
+    hasBeenEnoughTimeSinceLastNoJobsFound() {
+        const waitTimeBetweenNoJobsFound = 10000; //10 seconds
+        let firstTimeNotFindingJobs = this.timeOfLastNoJobsFound === null;
+
+        let currentTime = new Date().getTime();
+        let minimumIntervalPassed = currentTime - this.timeOfLastNoJobsFound >= waitTimeBetweenNoJobsFound;
+
+        return (firstTimeNotFindingJobs || minimumIntervalPassed);
+    }
+
     isReadyForNextJob() {
         let noPreviousJobs = this.timeOfLastFinishedJob === null;
 
@@ -104,18 +116,17 @@ class JobQueue {
     }
 
     async run() {
-        logger.verbose(`Job Queue ${this.name} starting run()`);
-
-        if (this.isJobRunning() || !this.isReadyForNextJob()) {
+        if (this.isJobRunning() || !this.isReadyForNextJob() || !this.hasBeenEnoughTimeSinceLastNoJobsFound()) {
             // nothing to do if we have a job, or we haven't waited enough for rate limit.
             return;
         }
+        logger.verbose(`Job Queue ${this.name} starting run()`);
 
         try {
             let job = await this.getNewJob();
             if (job === undefined) {
+                this.timeOfLastNoJobsFound = new Date().getTime();
                 return;
-                // Consider adding some sort of wait period if we get here to prevent unneeded db select spam
             }
 
             job = await this.runJob(job);

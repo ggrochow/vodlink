@@ -1,9 +1,8 @@
 const requestPromise = require('request-promise-native');
 const API_KEY = process.env['LOL_API_KEY'];
-const regions = require('./regions');
 
 function baseUrl(regionCode) {
-    return `https://${regions[regionCode]}.api.riotgames.com`
+    return `https://${regionCode}.api.riotgames.com`
 }
 
 function request(url, queryParams = {}) {

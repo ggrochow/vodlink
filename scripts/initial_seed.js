@@ -4,7 +4,6 @@
  */
 require('dotenv').config();
 
-const regions = require('../external_apis/lol/regions');
 const db = require('../database');
 const JOB_TYPES = require('../job_system/job_types.js');
 
@@ -13,7 +12,7 @@ const ACCOUNTS = [
         twitch_name: 'c9sneaky',
         lol_accounts: [
             {
-                region: regions.NA,
+                region: 'na1',
                 name: 'C9 Sneaky'
             },
         ]
@@ -22,7 +21,7 @@ const ACCOUNTS = [
         twitch_name: 'voyboy',
         lol_accounts: [
             {
-                region: regions.NA,
+                region: 'na1',
                 name: 'VoyBoy'
             },
 
@@ -32,7 +31,7 @@ const ACCOUNTS = [
         twitch_name: 'faker',
         lol_accounts: [
             {
-                region: regions.KR,
+                region: 'kr',
                 name: 'Hide on bush'
             }
         ]

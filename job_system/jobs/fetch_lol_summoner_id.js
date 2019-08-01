@@ -1,4 +1,3 @@
-const logger = require('../../utils/logger');
 const Job = require('./job');
 const lolApi = require('../../external_apis/lol');
 const db = require('../../database');
@@ -20,8 +19,6 @@ class FetchLolSummonerIdJob extends Job {
     }
 
     async run() {
-        logger.verbose(`${this.logPrefix()} starting run`);
-
         let apiResult;
         try {
             apiResult = await lolApi.getAccountInfoFromSummonerName(this.accountRegion, this.accountName);
@@ -39,8 +36,6 @@ class FetchLolSummonerIdJob extends Job {
             return this;
         }
         let nativeSummonerId = apiResult.accountId;
-
-        logger.verbose(`${this.logPrefix()} found summoner info, native id - ${nativeSummonerId}`);
 
         try {
             await db.lolSummoners.createNewLolSummoner(nativeSummonerId, this.accountName, this.accountRegion, this.twitchChannelId);
@@ -62,7 +57,6 @@ class FetchLolSummonerIdJob extends Job {
             console.error(sqlError);
         }
 
-        logger.verbose(`${this.logPrefix()} completed`);
         return this;
     }
 }
