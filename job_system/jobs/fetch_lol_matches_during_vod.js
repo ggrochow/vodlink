@@ -1,4 +1,5 @@
 const Job = require('./job');
+const logger = require('../../utils/logger');
 const lolApi = require('../../external_apis/lol');
 const db = require('../../database');
 const jobTypes = require('../job_types');
@@ -41,13 +42,15 @@ class FetchLolMatchesDuringVodJob extends Job {
         try {
             apiResults = await lolApi.getMatchesForAccountInPeriod(lolSummoner.region, lolSummoner.native_summoner_id, startTime, endTime);
         } catch (apiError) {
+            if (apiError.statusCode === 404) {
+                // 404 is returned if no results are found
+                logger.verbose(`${this.logPrefix()} got 404 while searching for games, assuming that means none found for this vod`);
+                return this;
+            }
+
             this.errors = `Error fetching lol matchlist from API - ${apiError.message}`;
             this.logErrors();
             console.error(apiError);
-            return this;
-        }
-
-        if (apiResults.matches.length === 0) {
             return this;
         }
 
@@ -55,7 +58,10 @@ class FetchLolMatchesDuringVodJob extends Job {
             let lolMatch = apiResults.matches[matchIndex];
 
             try {
-                let payload = { nativeMatchId: lolMatch.gameId };
+                let payload = {
+                    nativeMatchId: lolMatch.gameId,
+                    region: lolSummoner.region,
+                };
                 await db.jobs.createNewJob(jobTypes.FETCH_LOL_MATCH_INFO, payload)
             } catch (sqlError) {
                 this.errors = `Error saving FETCH MATCH INFO job - ${sqlError}`;

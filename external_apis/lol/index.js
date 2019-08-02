@@ -35,7 +35,14 @@ function getMatchesForAccountInPeriod(region, accountId, beginTime, endTime) {
     return request(url, params);
 }
 
+function getMatchInfoById(region, matchId) {
+    let url = `${baseUrl(region)}/lol/match/v4/matches/${matchId}`;
+
+    return request(url);
+}
+
 module.exports = {
     getAccountInfoFromSummonerName,
     getMatchesForAccountInPeriod,
+    getMatchInfoById,
 };

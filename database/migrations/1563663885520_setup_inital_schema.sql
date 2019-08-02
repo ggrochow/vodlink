@@ -23,15 +23,16 @@ CREATE TABLE twitch_vods (
 CREATE TABLE lol_matches (
     id                  serial      PRIMARY KEY,
     native_match_id     BIGINT      UNIQUE NOT NULL,
-    winning_team        SMALLINT    NOT NULL,
+    winning_team        INTEGER     NOT NULL,
     started_at          TIMESTAMP   NOT NULL,
-    ended_at            TIMESTAMP   NOT NULL
+    ended_at            TIMESTAMP   NOT NULL,
+    region              VARCHAR     NOT NULL
 );
 
 CREATE TABLE lol_match_participants (
     id                  serial      PRIMARY KEY,
     lol_match_id        INTEGER     NOT NULL,
-    team_id             SMALLINT    NOT NULL,
+    team_id             INTEGER     NOT NULL,
     champion_id         INTEGER     NOT NULL,
     lane                VARCHAR     NOT NULL,
     role                VARCHAR     NOT NULL,

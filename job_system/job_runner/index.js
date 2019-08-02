@@ -15,7 +15,7 @@ let twitchJobQueue = new JobQueue(twitchJobTypes, twitchRateLimit, 'Twitch');
 const lolJobTypes = [
     jobTypes.FETCH_LOL_SUMMONER_ID,
     jobTypes.FETCH_LOL_MATCHES_DURING_VOD,
-    // jobTypes.FETCH_LOL_MATCH_INFO,
+    jobTypes.FETCH_LOL_MATCH_INFO,
 ];
 
 // https://developer.riotgames.com/rate-limiting.html
