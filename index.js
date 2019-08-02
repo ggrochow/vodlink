@@ -4,9 +4,8 @@ const jobQueues = require('./job_system/job_runner/');
 
 const { twitchJobQueue, lolJobQueue } = jobQueues;
 
-twitchJobQueue.run();
-// setInterval(() => { twitchJobQueue.run() }, 1000);
+// twitchJobQueue.run();
+// lolJobQueue.run();
 
-
-lolJobQueue.run();
-// setInterval(() => lolJobQueue.run(), 1000);
+setInterval(() => { lolJobQueue.run() },     1000);
+setInterval(() => { twitchJobQueue.run() },  1000);

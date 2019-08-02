@@ -11,6 +11,13 @@ function createNew(startedAt, endedAt, twitchChannelId, nativeVodId) {
     return db.queryOne(query, params)
 }
 
+function getById(id) {
+    let query = 'SELECT * FROM twitch_vods WHERE id = $1';
+    let params = [id];
+
+    return db.queryOne(query, params);
+}
+
 function getAllNativeVodIdsByTwitchChannelId(twitchChannelId) {
     let query = 'SELECT native_vod_id FROM twitch_vods WHERE twitch_channel_id = $1';
     let params = [twitchChannelId];
@@ -20,5 +27,6 @@ function getAllNativeVodIdsByTwitchChannelId(twitchChannelId) {
 
 module.exports = {
     createNew,
+    getById,
     getAllNativeVodIdsByTwitchChannelId,
 };

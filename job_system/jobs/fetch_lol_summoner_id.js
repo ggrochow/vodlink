@@ -23,7 +23,6 @@ class FetchLolSummonerIdJob extends Job {
         try {
             apiResult = await lolApi.getAccountInfoFromSummonerName(this.accountRegion, this.accountName);
         } catch (apiError) {
-            // TODO: testing
             this.errors = `error while fetching summoner account info - ${apiError.message}`;
             this.logErrors();
             return this;

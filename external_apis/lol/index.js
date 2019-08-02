@@ -5,6 +5,7 @@ function baseUrl(regionCode) {
     return `https://${regionCode}.api.riotgames.com`
 }
 
+
 function request(url, queryParams = {}) {
     let options = {
         uri: url,
@@ -24,6 +25,17 @@ function getAccountInfoFromSummonerName(region, summonerName) {
     return request(url);
 }
 
+function getMatchesForAccountInPeriod(region, accountId, beginTime, endTime) {
+    let url = `${baseUrl(region)}/lol/match/v4/matchlists/by-account/${accountId}`;
+    let params = {
+        beginTime,
+        endTime,
+    };
+
+    return request(url, params);
+}
+
 module.exports = {
     getAccountInfoFromSummonerName,
+    getMatchesForAccountInPeriod,
 };

@@ -7,6 +7,22 @@ function createNewLolSummoner(nativeSummonerId, summonerName, region, twitchChan
     return db.queryOne(query, params);
 }
 
+function getAllByTwitchId(twitchId) {
+    let query = 'SELECT * FROM lol_summoners WHERE twitch_channel_id = $1';
+    let params = [twitchId];
+
+    return db.query(query, params);
+}
+
+function getById(id) {
+    let query = 'SELECT * FROM lol_summoners WHERE id = $1';
+    let params = [id];
+
+    return db.queryOne(query, params);
+}
+
 module.exports = {
     createNewLolSummoner,
+    getAllByTwitchId,
+    getById,
 };

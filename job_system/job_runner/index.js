@@ -4,7 +4,7 @@ const jobTypes = require('../job_types');
 const twitchJobTypes = [
     jobTypes.FETCH_TWITCH_CHANNEL_ID,
     jobTypes.FETCH_NEW_TWITCH_VODS,
-    jobTypes.CLEANUP_EXPIRED_TWITCH_VODS,
+    // jobTypes.CLEANUP_EXPIRED_TWITCH_VODS,
 ];
 // https://dev.twitch.tv/docs/api/guide/#rate-limits
 // No bearer token = 30 requests per minute.
@@ -14,7 +14,7 @@ let twitchJobQueue = new JobQueue(twitchJobTypes, twitchRateLimit, 'Twitch');
 
 const lolJobTypes = [
     jobTypes.FETCH_LOL_SUMMONER_ID,
-    // jobTypes.FETCH_LOL_MATCHES_DURING_VOD,
+    jobTypes.FETCH_LOL_MATCHES_DURING_VOD,
     // jobTypes.FETCH_LOL_MATCH_INFO,
 ];
 

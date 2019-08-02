@@ -18,7 +18,6 @@ class FetchNewTwitchVodsJob extends Job {
 
     async run() {
         // Get Channel info from our database
-        debugger;
         let twitchChannel;
         try {
             twitchChannel = await db.twitchAccounts.getById(this.twitchChannelId);
@@ -65,7 +64,7 @@ class FetchNewTwitchVodsJob extends Job {
                 return this;
             }
         }
-        debugger
+
         if (apiResult.data.length === 0) {
             return this;
         }
@@ -82,9 +81,17 @@ class FetchNewTwitchVodsJob extends Job {
             return this;
         }
 
-        // For each job,
-        // if its new, public, and not older than a month,
-        // create DB entry, and new FIND_LOL_MATCHES_DURING_VOD job.
+        let lolSummoners;
+        try {
+            lolSummoners = await db.lolSummoners.getAllByTwitchId(this.twitchChannelId);
+        } catch (sqlError) {
+            this.errors = `Error while fetching summoner accounts from database - ${sqlError.message}`;
+            this.logErrors();
+            console.error(sqlError);
+            return this;
+        }
+        // For each job, if its new, public, and created within the last month,
+        // create DB entry then foreach lol account associated - a new FIND_LOL_MATCHES_DURING_VOD job.
         let oneMonthAgo = moment().subtract(1, 'month').toDate();
         for (let vodIndex in apiResult.data) {
             let vodInfo = apiResult.data[vodIndex];
@@ -106,6 +113,7 @@ class FetchNewTwitchVodsJob extends Job {
 
             let endTime = calculateVodEndTime(vodInfo.duration, vodInfo.created_at);
 
+            // Create vod in DB
             let twitchVod;
             try {
                 twitchVod = await db.twitchVods.createNew(startTime, endTime, this.twitchChannelId, nativeVodId);
@@ -116,15 +124,24 @@ class FetchNewTwitchVodsJob extends Job {
                 return this;
             }
 
-            try {
-                let payload = { twitchVodId: twitchVod.id };
-                await db.jobs.createNewJob(jobTypes.FETCH_LOL_MATCHES_DURING_VOD, payload)
-            } catch (sqlError) {
-                this.errors = `Error while creating twich_vod - ${sqlError.message}`;
-                this.logErrors();
-                console.error(sqlError);
-                return this;
+            // Create a look at vods job for each summoner account associated
+            for (let summonerIndex in lolSummoners) {
+                let summonerAccount = lolSummoners[summonerIndex];
+
+                try {
+                    let payload = {
+                        twitchVodId: twitchVod.id,
+                        summonerId: summonerAccount.id
+                    };
+                    await db.jobs.createNewJob(jobTypes.FETCH_LOL_MATCHES_DURING_VOD, payload)
+                } catch (sqlError) {
+                    this.errors = `Error while creating FETCH LOL MATCH JOB - ${sqlError.message}`;
+                    this.logErrors();
+                    console.error(sqlError);
+                    return this;
+                }
             }
+
         }
 
         return this;
