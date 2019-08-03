@@ -24,11 +24,15 @@ const lolRateLimit = 900;
 
 let lolJobQueue = new JobQueue(lolJobTypes, lolRateLimit, "LoL");
 
-// const nonApiJobTypes = [
-//     jobTypes.ASSOCIATE_LOL_MATCH_TO_TWITCH_VOD,
-// ];
+const nonApiJobTypes = [
+    jobTypes.ASSOCIATE_LOL_MATCH_TO_TWITCH_VOD,
+];
+const nonApiRateLimit = 100;
+
+let nonApiJobQueue = new JobQueue(nonApiJobTypes, nonApiRateLimit, 'SQL');
 
 module.exports = {
     twitchJobQueue,
     lolJobQueue,
+    nonApiJobQueue
 };

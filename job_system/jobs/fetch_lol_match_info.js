@@ -64,7 +64,7 @@ class FetchLolMatchInfoJob extends Job {
         let winningTeamId = winningTeam.teamId;
 
         try {
-            lolMatch = await db.lolMatches.createNew(this.nativeMatchId, winningTeamId, startTime.toDate(), endTime.toDate(), this.region);
+            lolMatch = await db.lolMatches.createNew(this.nativeMatchId, winningTeamId, startTime, endTime, this.region);
         } catch (sqlError) {
             this.errors = `Error saving lolMatch to database - ${sqlError.message}`;
             this.logErrors();

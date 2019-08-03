@@ -18,7 +18,19 @@ function getById(id) {
     return db.queryOne(query, params);
 }
 
+function getByNativeSummonerIds(nativeSummonerIds) {
+    let query = '' +
+        'SELECT * FROM twitch_channels WHERE id in ' +
+        '   (' +
+        '       SELECT twitch_channel_id FROM lol_summoners WHERE native_summoner_id IN ($1:list) ' +
+        '   )';
+    let params = [nativeSummonerIds];
+
+    return db.query(query, params);
+}
+
 module.exports = {
     createNew,
     getById,
+    getByNativeSummonerIds,
 };

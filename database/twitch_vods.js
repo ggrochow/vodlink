@@ -25,8 +25,17 @@ function getAllNativeVodIdsByTwitchChannelId(twitchChannelId) {
     return db.query(query, params);
 }
 
+function findVodPlayedDuringPeriodByAccount(startTime, endTime, twitchAccountId) {
+    let query = '' +
+        'SELECT * FROM twitch_vods WHERE started_at < $1 AND ended_at > $2 AND twitch_channel_id = $3';
+    let params = [startTime, endTime, twitchAccountId];
+
+    return db.queryOne(query, params);
+}
+
 module.exports = {
     createNew,
     getById,
     getAllNativeVodIdsByTwitchChannelId,
+    findVodPlayedDuringPeriodByAccount,
 };

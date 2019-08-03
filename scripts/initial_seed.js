@@ -50,3 +50,8 @@ ACCOUNTS.forEach( accountObj => {
         .catch(e => console.error(JSON.stringify(e, null, 4)));
 });
 
+
+// look into
+// corejj
+// doublelift
+// metaphor

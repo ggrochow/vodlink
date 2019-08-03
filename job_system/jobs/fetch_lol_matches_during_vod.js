@@ -35,8 +35,8 @@ class FetchLolMatchesDuringVodJob extends Job {
             return this;
         }
 
-        let startTime = twitchVod.started_at.getTime();
-        let endTime = twitchVod.ended_at.getTime();
+        let startTime = twitchVod.started_at.valueOf();
+        let endTime = twitchVod.ended_at.valueOf();
 
         let apiResults;
         try {

@@ -10,6 +10,14 @@ function createNew(matchId, teamId, championId, lane, role, summonerName, native
     return db.queryOne(query, params);
 }
 
+function findByMatchId(matchId) {
+    let query = 'SELECT * FROM lol_match_participants WHERE lol_match_id = $1';
+    let params = [matchId];
+
+    return db.query(query, params);
+}
+
 module.exports = {
     createNew,
+    findByMatchId,
 };

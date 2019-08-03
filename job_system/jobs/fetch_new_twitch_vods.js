@@ -92,7 +92,7 @@ class FetchNewTwitchVodsJob extends Job {
         }
         // For each job, if its new, public, and created within the last month,
         // create DB entry then foreach lol account associated - a new FIND_LOL_MATCHES_DURING_VOD job.
-        let oneMonthAgo = moment().subtract(1, 'month').toDate();
+        let oneMonthAgo = moment().subtract(1, 'month');
         for (let vodIndex in apiResult.data) {
             let vodInfo = apiResult.data[vodIndex];
 
@@ -106,13 +106,12 @@ class FetchNewTwitchVodsJob extends Job {
                 // TODO: look into why this might still allow for duplicate vodId
             }
 
-            let startTime = new Date(vodInfo.created_at);
+            let startTime = moment.utc(vodInfo.created_at);
             if (startTime < oneMonthAgo) {
                 continue;
             }
 
             let endTime = calculateVodEndTime(vodInfo.duration, vodInfo.created_at);
-
             // Create vod in DB
             let twitchVod;
             try {
@@ -153,7 +152,7 @@ function calculateVodEndTime(durationString, startedAt) {
     let duration = moment.duration(iso8601Duration);
 
     let startTime = moment.utc(startedAt);
-    return startTime.add(duration).toDate();
+    return startTime.add(duration);
 }
 
 

@@ -29,9 +29,9 @@ class JobQueue {
     }
 
     async runJob(jobRows) {
-        logger.verbose(`Job Queue ${this.name} starting runJob( id: ${jobRows.id} )`);
-
         let job = jobs.instantiateJob(jobRows);
+        logger.verbose(`Job Queue ${this.name} starting runJob(${job.logPrefix()})`);
+
         this.currentJob = job;
 
         try {

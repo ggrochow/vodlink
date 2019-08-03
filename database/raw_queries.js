@@ -3,6 +3,15 @@
  */
 const logger = require('../utils/logger');
 const pgp = require("pg-promise")();
+const moment = require('moment');
+
+// Avoid getting timezones into our PG DateTime return values, instead return a moment object with UTC;
+// https://github.com/brianc/node-postgres/issues/429#issuecomment-24870258
+// https://github.com/vitaly-t/pg-promise/issues/130
+pgp.pg.types.setTypeParser(1114, function(strValue) {
+    return moment.utc(strValue);
+});
+
 const db = pgp({
     host: process.env.PGHOST,
     port: process.env.PGPORT,
