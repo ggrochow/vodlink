@@ -44,7 +44,7 @@ CREATE TABLE lol_match_twitch_vods (
     id                  serial      PRIMARY KEY,
     lol_match_id        INTEGER     NOT NULL,
     twitch_vod_id       INTEGER     NOT NULL,
-    vod_timestamp       VARCHAR     NOT NULL
+    vod_timestamp       INTEGER     NOT NULL
 );
 
 CREATE TYPE job_type_enum AS ENUM (

@@ -79,13 +79,9 @@ class AssociateLolMatchToTwitchVodsJob extends Job {
 
             let durationToMatchStart = moment.duration(matchStart.diff(twitchVod.started_at));
             let secondsFromVodStartToMatchStart = Math.round(durationToMatchStart.as('seconds'));
-            let loadingTimeOffset = 120;
-            // Lol matches take a while to load, and take over a minute from actual start for anything to happen
-            // We add an offset to hopefully link to less load screens, and get directly into action;
-            let vodTimestamp = `?t=${secondsFromVodStartToMatchStart + loadingTimeOffset}s`;
 
             try {
-                await db.lolMatchTwitchVods.createNew(this.matchId, twitchVod.id, vodTimestamp);
+                await db.lolMatchTwitchVods.createNew(this.matchId, twitchVod.id, secondsFromVodStartToMatchStart);
             } catch (sqlError) {
                 this.errors = `SQL Error while creating twitchVodLolMatch relation - ${sqlError.message}`;
                 this.logErrors();

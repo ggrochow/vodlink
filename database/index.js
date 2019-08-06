@@ -6,6 +6,8 @@ const lolMatches = require('./lol_match');
 const lolMatchParticipant = require('./lol_match_participants');
 const lolMatchTwitchVods = require('./lol_match_twitch_vods');
 
+const searchQueries = require('./search_queries');
+
 module.exports = {
     jobs,
     twitchAccounts,
@@ -14,4 +16,5 @@ module.exports = {
     lolMatches,
     lolMatchParticipant,
     lolMatchTwitchVods,
+    searchQueries,
 };
