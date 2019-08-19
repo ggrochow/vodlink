@@ -4,17 +4,25 @@
   "description": "postgres 11.4\r node 12.6.0",
   "main": "job_system/job_runner/index.js",
   "scripts": {
+    "dev": "next webapp",
+    "build": "next build webapp",
+    "start": "next start webapp",
     "create_migration": "node scripts/create_migration.js",
     "seed_database": "node scripts/initial_seed.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.5",
     "dotenv": "^8.0.0",
     "express": "^4.17.1",
+    "fuse.js": "^3.4.5",
     "moment": "^2.24.0",
+    "next": "^9.0.3",
     "pg": "^7.12.0",
     "pg-promise": "^9.0.0",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
     "request": "^2.88.0",
     "request-promise-native": "^1.0.7",
     "winston": "^3.2.1"

@@ -3,32 +3,26 @@
 
 const champions = require('./champions.js');
 
-const roles = [
-    'DUO_CARRY',
-    'DUO_SUPPORT',
-    'NONE',
-    'SOLO'
-];
-
-const lanes = [
-    'BOTTOM',
-    'MIDDLE',
-    'JUNGLE',
-    'TOP'
-];
-
-const roleLaneByReadableRole = {
-    ADC:        { ROLE: 'DUO_ADC',      LANE: 'BOTTOM' },
-    SUPPORT:    { ROLE: 'DUS_SUPPORT',  LANE: 'BOTTOM' },
-    JUNGLE:     { ROLE: 'NONE',         LANE: 'JUNGLE' },
-    MID:        { ROLE: 'SOLO',         LANE: 'MIDDLE' },
-    TOP:        { ROLE: 'SOLO',         LANE: 'TOP'    },
+const rolesByNativeRole = {
+    DUO_CARRY: 'bot',
+    DUO_SUPPORT: 'support',
+    NONE: 'jungle',
 };
 
+const soloRoles =  {
+    TOP: 'top',
+    MIDDLE: 'mid',
+};
+
+function getRoleByNativeLolRoleLane(role, lane) {
+    if (role === 'SOLO') {
+        return soloRoles[lane];
+    } else {
+        return rolesByNativeRole[role];
+    }
+}
+
 module.exports = {
-    roleLaneByReadableRole,
-    roles,
-    lanes,
     championById: champions.championById,
-    championIdByName: champions.championByName
+    getRoleByNativeLolRoleLane,
 };

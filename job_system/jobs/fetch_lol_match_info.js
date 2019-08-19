@@ -1,5 +1,6 @@
 const Job = require('./job');
 const lolApi = require('../../external_apis/lol');
+const lolData = require('../../lol_data');
 const db = require('../../database');
 const jobTypes = require('../job_types');
 const moment = require('moment');
@@ -78,12 +79,16 @@ class FetchLolMatchInfoJob extends Job {
 
         for (let participantIndex in apiResult.participants) {
             let participant = apiResult.participants[participantIndex];
+            let role = lolData.getRoleByNativeLolRoleLane(participant.timeline.role, participant.timeline.lane);
+            if (role === undefined || role === null) {
+                // still not sure what to do here, we could try to salvage some stuff, but it might just be worth ignoring it
+                role = `${participant.timeline.lane} - ${participant.timeline.role}`;
+            }
             let participantInfo = {
                 participantId: participant.participantId,
                 teamId: participant.teamId,
                 championId: participant.championId,
-                lane: participant.timeline.lane,
-                role: participant.timeline.role,
+                role,
             };
 
             participants[participantInfo.participantId] = participantInfo;
@@ -105,9 +110,8 @@ class FetchLolMatchInfoJob extends Job {
         let matchId = lolMatch.id;
         for (let participantId in participants) {
             let participant = participants[participantId];
-
             try {
-                await db.lolMatchParticipant.createNew(matchId, participant.teamId, participant.championId, participant.lane, participant.role, participant.summonerName, participant.accountId);
+                await db.lolMatchParticipant.createNew(matchId, participant.teamId, participant.championId, participant.role, participant.summonerName, participant.accountId);
             } catch (sqlError) {
                 this.errors = `Error saving lol_match_participant to DB - ${sqlError.message}`;
                 this.logErrors();

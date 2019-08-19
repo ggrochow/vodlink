@@ -34,7 +34,6 @@ CREATE TABLE lol_match_participants (
     lol_match_id        INTEGER     NOT NULL,
     team_id             INTEGER     NOT NULL,
     champion_id         INTEGER     NOT NULL,
-    lane                VARCHAR     NOT NULL,
     role                VARCHAR     NOT NULL,
     summoner_name       VARCHAR     NOT NULL,
     native_summoner_id  VARCHAR     NOT NULL
