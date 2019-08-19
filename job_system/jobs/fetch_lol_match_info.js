@@ -81,7 +81,7 @@ class FetchLolMatchInfoJob extends Job {
             let participant = apiResult.participants[participantIndex];
             let role = lolData.getRoleByNativeLolRoleLane(participant.timeline.role, participant.timeline.lane);
             if (role === undefined || role === null) {
-                // still not sure what to do here, we could try to salvage some stuff, but it might just be worth ignoring it
+                // TODO: handle no role found. This is fairly common
                 role = `${participant.timeline.lane} - ${participant.timeline.role}`;
             }
             let participantInfo = {
@@ -96,11 +96,16 @@ class FetchLolMatchInfoJob extends Job {
 
         for (let participantIdentityIndex in apiResult.participantIdentities) {
             let participantIdentity = apiResult.participantIdentities[participantIdentityIndex];
+            let historyUri = participantIdentity.player.matchHistoryUri.split('/');
+            // To be able to link to the match history page, we need to extract the final number from this URI
+            // "/v1/stats/player_history/NA/78247"
+            let historyId = historyUri[historyUri.length - 1];
 
             let identityInfo = {
                 participantId:  participantIdentity.participantId,
                 accountId: participantIdentity.player.accountId,
                 summonerName: participantIdentity.player.summonerName,
+                historyAccountId: historyId,
             };
 
             Object.assign(participants[identityInfo.participantId], identityInfo);
@@ -111,7 +116,11 @@ class FetchLolMatchInfoJob extends Job {
         for (let participantId in participants) {
             let participant = participants[participantId];
             try {
-                await db.lolMatchParticipant.createNew(matchId, participant.teamId, participant.championId, participant.role, participant.summonerName, participant.accountId);
+                await db.lolMatchParticipant.createNew(
+                    matchId, participant.teamId, participant.championId,
+                    participant.role, participant.summonerName, participant.accountId,
+                    participant.historyAccountId
+                );
             } catch (sqlError) {
                 this.errors = `Error saving lol_match_participant to DB - ${sqlError.message}`;
                 this.logErrors();

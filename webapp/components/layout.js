@@ -1,7 +1,5 @@
 import Head from 'next/head';
 import Header from './layout/header';
-import Footer from './layout/footer';
-
 
 const Layout = props => (
     <div>
@@ -10,8 +8,7 @@ const Layout = props => (
         </Head>
 
         <Header/>
-            {props.children}
-        <Footer/>
+        {props.children}
 
         {/*language=SCSS*/}
         <style jsx global>{`

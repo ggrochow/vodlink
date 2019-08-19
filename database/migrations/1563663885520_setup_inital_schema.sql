@@ -36,7 +36,8 @@ CREATE TABLE lol_match_participants (
     champion_id         INTEGER     NOT NULL,
     role                VARCHAR     NOT NULL,
     summoner_name       VARCHAR     NOT NULL,
-    native_summoner_id  VARCHAR     NOT NULL
+    native_summoner_id  VARCHAR     NOT NULL,
+    history_account_id  VARCHAR     NOT NULL
 );
 
 CREATE TABLE lol_match_twitch_vods (

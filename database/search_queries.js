@@ -63,9 +63,14 @@ function getOpponentChampionIdsByRoleAndOurChampion(role, championId) {
 function getVodLinkInfoByMatchUp(role, championId, opponentChampionId) {
     let query = '' +
         'SELECT ' +
+        '   relation.id AS id, ' +
         '   vod.native_vod_id AS vod_id, ' +
         '   relation.vod_timestamp AS vod_offset_seconds, ' +
-        '   participant.summoner_name AS streamer_name, ' +
+        '   match.native_match_id AS native_match_id, ' +
+        '   participant.summoner_name AS streamer_name, '+
+        '   participant.history_account_id AS streamer_history_id, '+
+        '   summoner.summoner_name AS summoner_name, ' +
+        '   summoner.region AS region, ' +
         '   opponent.summoner_name AS opp_name ' +
         'FROM ' +
         '   lol_match_twitch_vods AS relation ' +

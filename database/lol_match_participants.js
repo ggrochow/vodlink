@@ -1,11 +1,11 @@
 const db = require('./raw_queries');
 
-function createNew(matchId, teamId, championId, role, summonerName, nativeSummonerId) {
+function createNew(matchId, teamId, championId, role, summonerName, nativeSummonerId, historyId) {
     let query = "" +
         "INSERT INTO lol_match_participants " +
-        "(lol_match_id, team_id, champion_id, role, summoner_name, native_summoner_id) " +
-        "VALUES ($1, $2, $3, $4, $5, $6) RETURNING *";
-    let params = [matchId, teamId, championId, role, summonerName, nativeSummonerId];
+        "(lol_match_id, team_id, champion_id, role, summoner_name, native_summoner_id, history_account_id) " +
+        "VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *";
+    let params = [matchId, teamId, championId, role, summonerName, nativeSummonerId, historyId];
 
     return db.queryOne(query, params);
 }
