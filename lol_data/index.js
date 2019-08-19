@@ -1,7 +1,7 @@
 //  TODO: get info by champion id, including links to stuff
 // save dd version
 
-const champions = require('./champions.js');
+const championById = require('./champion.json');
 
 const rolesByNativeRole = {
     DUO_CARRY: 'bot',
@@ -23,6 +23,6 @@ function getRoleByNativeLolRoleLane(role, lane) {
 }
 
 module.exports = {
-    championById: champions.championById,
+    championById,
     getRoleByNativeLolRoleLane,
 };

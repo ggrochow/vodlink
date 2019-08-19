@@ -60,7 +60,6 @@ app.get('/api/vodLink', (req, res) => {
 
 let port = process.env.API_PORT;
 app.listen(port, () => console.log(`app listening on ${port}`));
-// TODO: move port to env
 // TODO: move run to base index.js
 // TODO: response caching
 // TODO: proper cors handling

@@ -8,7 +8,8 @@
     "build": "next build webapp",
     "start": "next start webapp",
     "create_migration": "node scripts/create_migration.js",
-    "seed_database": "node scripts/initial_seed.js"
+    "seed_database": "node scripts/initial_seed.js",
+    "update_champion_json": "node scripts/fetch_champion_json.js"
   },
   "author": "",
   "license": "ISC",
