@@ -5,7 +5,6 @@ function baseUrl(regionCode) {
     return `https://${regionCode}.api.riotgames.com`
 }
 
-
 function request(url, queryParams = {}) {
     let options = {
         uri: url,

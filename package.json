@@ -2,7 +2,7 @@
   "name": "vodlink",
   "version": "1.0.0",
   "description": "postgres 11.4\r node 12.6.0",
-  "main": "job_system/job_queue/index.js",
+  "main": "index.js",
   "scripts": {
     "dev": "next webapp",
     "build": "next build webapp",

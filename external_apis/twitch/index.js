@@ -16,9 +16,6 @@ function request(url, queryParams) {
     return requestPromise(options);
 }
 
-
-// Get user info by twitch name
-// GET https://api.twitch.tv/helix/users?login=XXXXXXX
 function getUserInfoFromChannelName(channelName) {
     let url = `${NEW_API_BASE_URL}/users`;
     let queryParams = { login: channelName };

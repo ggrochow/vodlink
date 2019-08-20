@@ -4,8 +4,6 @@ const db = require('../database');
 const logger = require('../utils/logger');
 const app = express();
 
-require('dotenv').config();
-
 app.use(cors());
 
 
@@ -58,8 +56,7 @@ app.get('/api/vodLink', (req, res) => {
         })
 });
 
-let port = process.env.API_PORT;
-app.listen(port, () => console.log(`app listening on ${port}`));
-// TODO: move run to base index.js
+module.exports = app;
+
 // TODO: response caching
 // TODO: proper cors handling
