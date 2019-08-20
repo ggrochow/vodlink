@@ -1,9 +1,22 @@
 const Job = require('./job');
-const logger = require('../../utils/logger');
-const lolApi = require('../../external_apis/lol');
-const db = require('../../database');
+const logger = require('../../../utils/logger');
+const lolApi = require('../../../external_apis/lol');
+const db = require('../../../database');
 const jobTypes = require('../job_types');
 
+/**
+ * Job to find a list of all lol_matches played by a streamer during a given twitch vod
+ *
+ * PAYLOAD: {
+ *     twitchVodId:
+ *     summonerId:
+ * }
+ * twitchVodId: database id of twitch vod
+ * summonerId: database id of summoner account
+ *
+ *
+ * If we find any matches, create a new FetchLoLMatchInfo job for each
+ */
 class FetchLolMatchesDuringVodJob extends Job {
 
     get twitchVodId() {

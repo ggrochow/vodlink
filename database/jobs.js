@@ -3,7 +3,7 @@
  */
 
 const db = require('./raw_queries');
-const jobStatusTypes = require('../job_system/job_status_types.js');
+const jobStatusTypes = require('../job_system/job_queue/job_status_types.js');
 
 
 function createNewJob(jobType, payload) {

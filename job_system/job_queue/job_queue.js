@@ -1,4 +1,4 @@
-const jobs = require('../jobs');
+const jobs = require('./jobs');
 const db = require('../../database');
 const logger = require('../../utils/logger');
 

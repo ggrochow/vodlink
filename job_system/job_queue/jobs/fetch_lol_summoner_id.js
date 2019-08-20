@@ -1,9 +1,23 @@
 const Job = require('./job');
-const lolApi = require('../../external_apis/lol');
-const db = require('../../database');
+const lolApi = require('../../../external_apis/lol');
+const db = require('../../../database');
 const jobTypes = require('../job_types');
 
-// {"summonerName": "VoyBoy", "summonerRegion": "NA", "twitchChannelId": 14}
+/**
+ * Job to lookup a summoner by name & region, If found associate it to the provided channel
+ *
+ * PAYLOAD: {
+ *     summonerName:
+ *     summonerRegion:
+ *     twitchChannelId:
+ * }
+ * summonerName: name of summoner to lookup info on
+ * summonerRegion: region that the summoner account is on
+ * twitchChannelId: database id of twitch channel to associate summoner with
+ *
+ * After successful association, create a FetchNewTwitchVods job for the associated channel.
+ * fetchNewTwitchVods jobs here since this is only ran when making new accounts, so we have new data to check against
+ */
 class FetchLolSummonerIdJob extends Job {
 
     get accountRegion() {

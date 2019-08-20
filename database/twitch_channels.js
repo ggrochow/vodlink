@@ -29,8 +29,15 @@ function getByNativeSummonerIds(nativeSummonerIds) {
     return db.query(query, params);
 }
 
+function getAll() {
+    let query = 'SELECT * FROM twitch_channels';
+
+    return db.query(query);
+}
+
 module.exports = {
     createNew,
     getById,
     getByNativeSummonerIds,
+    getAll,
 };

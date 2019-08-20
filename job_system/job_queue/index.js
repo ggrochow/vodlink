@@ -1,5 +1,5 @@
 const JobQueue = require('./job_queue');
-const jobTypes = require('../job_types');
+const jobTypes = require('./job_types');
 
 const twitchJobTypes = [
     jobTypes.FETCH_TWITCH_CHANNEL_ID,

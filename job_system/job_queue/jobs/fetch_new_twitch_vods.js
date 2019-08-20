@@ -1,9 +1,22 @@
 const Job = require('./job');
-const twitchApi = require('../../external_apis/twitch');
-const db = require('../../database');
+const twitchApi = require('../../../external_apis/twitch');
+const db = require('../../../database');
 const jobTypes = require('../job_types');
 const moment = require('moment');
 
+/**
+ * Job to find all new twitch vods for a channel
+ *
+ * PAYLOAD: {
+ *     twitchChannelId:
+ *     cursor: *OPTIONAL*
+ * }
+ * twitchChannelId: database id of twitch channel
+ * cursor: api pagination cursor, optionally included if a single api query doesn't return all vods
+ *
+ * If any new vods are found, creates a FetchLolMatchesDuringVod job for EACH summoner account associated with the channel
+ * Since our jobs are limited to 1 API query per job, we need a multiple jobs if multiple summoners exist
+ */
 class FetchNewTwitchVodsJob extends Job {
 
     get twitchChannelId() {

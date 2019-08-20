@@ -1,7 +1,16 @@
 const Job = require('./job');
-const db = require('../../database');
+const db = require('../../../database');
 const moment = require('moment');
 
+/**
+ * Job to find all twitch vods that this lol match was played on.
+ *
+ * PAYLOAD: {
+ *      matchId:
+ * }
+ * matchId: database id of lol_match we are associating
+ *
+ */
 class AssociateLolMatchToTwitchVodsJob extends Job {
     get matchId() {
         return this.payload.matchId;

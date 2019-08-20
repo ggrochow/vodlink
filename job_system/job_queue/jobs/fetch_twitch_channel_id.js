@@ -1,8 +1,22 @@
-const twitchApi = require('../../external_apis/twitch');
+const twitchApi = require('../../../external_apis/twitch');
 const jobTypes = require("../job_types");
 const Job = require("./job");
-const db = require('../../database');
+const db = require('../../../database');
 
+/**
+ * Finds native id for a twitch channel by name
+ *
+ * PAYLOAD: {
+ *     twitchName:
+ *     lolAccounts: [
+ *          { name: , region: }
+ *     ]
+ * }
+ * twitchName: name of the twitch channel to lookup
+ * lolAccounts: array of objects with a name&region field containing information on this channels summoner account(s)
+ *
+ * Creates a FetchLolSummonerId job for each object in the lolAccounts array.
+ */
 class FetchTwitchChannelIdJob extends Job {
 
     get channelName() {

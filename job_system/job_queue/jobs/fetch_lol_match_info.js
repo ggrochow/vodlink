@@ -1,10 +1,22 @@
 const Job = require('./job');
-const lolApi = require('../../external_apis/lol');
-const lolData = require('../../lol_data');
-const db = require('../../database');
+const lolApi = require('../../../external_apis/lol');
+const lolData = require('../../../lol_data');
+const db = require('../../../database');
 const jobTypes = require('../job_types');
 const moment = require('moment');
 
+/**
+ * Job to get details about a LoL Match and its participants
+ *
+ * PAYLOAD : {
+ *     nativeMatchId:
+ *     region:
+ * }
+ * nativeMatchId: native lol API match id
+ * region: region match took place.
+ *
+ * Starts an AssociateLolMatchToTwitchVod job after completion.
+ */
 class FetchLolMatchInfoJob extends Job {
 
     get nativeMatchId() {

@@ -1,4 +1,4 @@
-const logger = require('../../utils/logger');
+const logger = require('../../../utils/logger');
 
 /**
  * Job for shared functions, to be subclassed from, don't use directly
