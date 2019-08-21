@@ -86,7 +86,7 @@ class FetchNewTwitchVodsJob extends Job {
         let nativeVodIdsInDatabase;
         try {
             nativeVodIdsInDatabase = await db.twitchVods.getAllNativeVodIdsByTwitchChannelId(this.twitchChannelId);
-            nativeVodIdsInDatabase.map(res => res.native_vod_id.toString());
+            nativeVodIdsInDatabase = nativeVodIdsInDatabase.map(res => res.native_vod_id);
         } catch (sqlError) {
             this.errors = `Error while fetching known vodIds from database - ${sqlError.message}`;
             this.logErrors();

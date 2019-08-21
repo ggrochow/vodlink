@@ -49,9 +49,10 @@ class FetchLolSummonerIdJob extends Job {
             return this;
         }
         let nativeSummonerId = apiResult.accountId;
+        let summonerName = apiResult.name;
 
         try {
-            await db.lolSummoners.createNewLolSummoner(nativeSummonerId, this.accountName, this.accountRegion, this.twitchChannelId);
+            await db.lolSummoners.createNewLolSummoner(nativeSummonerId, summonerName, this.accountRegion, this.twitchChannelId);
         } catch (sqlError) {
             // TODO: testing
             this.errors = `SQL error creating summoner account -  ${sqlError.message}`;

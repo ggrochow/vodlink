@@ -45,6 +45,7 @@ class FetchLolMatchInfoJob extends Job {
             try {
                 let payLoad = { matchId: lolMatch.id };
                 await db.jobs.createNewJob(jobTypes.ASSOCIATE_LOL_MATCH_TO_TWITCH_VOD, payLoad);
+                return this;
             } catch (sqlError) {
                 this.errors = `SQL error when creating ASSOCIATE job - ${sqlError.message}`;
                 this.logErrors();
@@ -115,7 +116,7 @@ class FetchLolMatchInfoJob extends Job {
 
             let identityInfo = {
                 participantId:  participantIdentity.participantId,
-                accountId: participantIdentity.player.accountId,
+                accountId: participantIdentity.player.currentAccountId,
                 summonerName: participantIdentity.player.summonerName,
                 historyAccountId: historyId,
             };

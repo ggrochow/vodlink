@@ -48,10 +48,11 @@ class FetchTwitchChannelIdJob extends Job {
         }
 
         let nativeTwitchId = apiResult.data[0].id;
+        let twitchName = apiResult.data[0].display_name;
 
         let twitchAccount;
         try {
-            twitchAccount = await db.twitchAccounts.createNew(this.channelName, nativeTwitchId);
+            twitchAccount = await db.twitchAccounts.createNew(twitchName, nativeTwitchId);
         } catch (sqlErr) {
             // TODO: testing
             this.errors = `SQL error while saving twitch account - ${sqlErr.message}`;
