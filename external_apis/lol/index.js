@@ -44,4 +44,5 @@ module.exports = {
     getAccountInfoFromSummonerName,
     getMatchesForAccountInPeriod,
     getMatchInfoById,
+    API_KEY,
 };

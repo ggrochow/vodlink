@@ -1,5 +1,4 @@
 import Head from 'next/head';
-import Header from './layout/header';
 
 const Layout = props => (
     <div>
@@ -7,7 +6,6 @@ const Layout = props => (
             <title>{props.title}</title>
         </Head>
 
-        <Header/>
         {props.children}
 
         {/*language=SCSS*/}

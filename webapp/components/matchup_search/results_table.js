@@ -18,10 +18,10 @@ const ResultsTable = (props) => (
                         id, region,
                         streamer_name: streamerName, vod_offset_seconds: vodOffsetSeconds,
                         vod_id: vodId, summoner_name: summonerName, opp_name: opponentName,
-                        native_match_id: nativeMatchId, streamer_history_id: streamerHistoryId,
+                        native_match_id: nativeMatchId
                     } = vodLink;
                     let vodUrl = twitchVodLink(vodId, vodOffsetSeconds);
-                    let historyUrl = matchHistoryLink(region, nativeMatchId, streamerHistoryId);
+                    let historyUrl = matchHistoryLink(region, nativeMatchId);
                    return  (
                         <tr key={id}>
                             <td>{streamerName}</td>

@@ -3,26 +3,15 @@
 
 const championById = require('./champion.json');
 
-const rolesByNativeRole = {
-    DUO_CARRY: 'bot',
-    DUO_SUPPORT: 'support',
-    NONE: 'jungle',
+const rolesByRoleMlRole = {
+    jungle: 'jungle',
+    top: 'top',
+    mid: 'mid',
+    bot: 'bot',
+    supp: 'support',
 };
-
-const soloRoles =  {
-    TOP: 'top',
-    MIDDLE: 'mid',
-};
-
-function getRoleByNativeLolRoleLane(role, lane) {
-    if (role === 'SOLO') {
-        return soloRoles[lane];
-    } else {
-        return rolesByNativeRole[role];
-    }
-}
 
 module.exports = {
     championById,
-    getRoleByNativeLolRoleLane,
+    rolesByRoleMlRole
 };

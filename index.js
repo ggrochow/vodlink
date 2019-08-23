@@ -7,9 +7,9 @@ const logger = require('./utils/logger');
 const { twitchJobQueue, lolJobQueue, nonApiJobQueue } = jobQueues;
 
 logger.info("Initializing Job queues");
-setInterval(() => { lolJobQueue.run() },     1000);
-setInterval(() => { twitchJobQueue.run() },  1000);
-setInterval(() => { nonApiJobQueue.run() },  1000);
+setInterval(() => { lolJobQueue.run() },     100);
+setInterval(() => { twitchJobQueue.run() },  100);
+setInterval(() => { nonApiJobQueue.run() },  100);
 
 logger.info("Initializing CRON jobs");
 const { createFetchNewVods } = cronJobs;

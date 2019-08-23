@@ -97,7 +97,7 @@ class JobQueue {
 
     // Wait an arbitrary amount of time if we don't find any results.
     hasBeenEnoughTimeSinceLastNoJobsFound() {
-        const waitTimeBetweenNoJobsFound = 10000; //10 seconds
+        const waitTimeBetweenNoJobsFound = 60000; // 60 seconds
         let firstTimeNotFindingJobs = this.timeOfLastNoJobsFound === null;
 
         let currentTime = new Date().getTime();

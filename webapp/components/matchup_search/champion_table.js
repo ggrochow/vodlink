@@ -1,16 +1,7 @@
 import React from 'react';
-import Fuse from 'fuse.js';
 import lolData from "../../../lol_data";
 
 let championIds = Object.keys(lolData.championById);
-let fuse = new Fuse(
-    Object.values(lolData.championById),
-    {
-        id: 'key',
-        keys: ['name'],
-        threshold: 0.3,
-    }
-);
 
 class ChampionTable extends React.Component {
 
@@ -26,14 +17,15 @@ class ChampionTable extends React.Component {
     filteredChampionList() {
         let validChamps = this.props.validChamps || championIds;
 
-        let searchText = this.state.searchText;
-
+        let searchText = this.state.searchText.toLowerCase();
         if (searchText.length < 2) {
             return validChamps;
         }
 
-        let fuseMatches = fuse.search(searchText);
-        return validChamps.filter(id => fuseMatches.includes(id));
+        return validChamps.filter(id => {
+            let champName = lolData.championById[id].name.toLowerCase();
+            return champName.indexOf(searchText) !== -1;
+        })
     }
 
 

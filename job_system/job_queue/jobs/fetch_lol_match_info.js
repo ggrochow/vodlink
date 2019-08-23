@@ -1,6 +1,5 @@
 const Job = require('./job');
 const lolApi = require('../../../external_apis/lol');
-const lolData = require('../../../lol_data');
 const db = require('../../../database');
 const jobTypes = require('../job_types');
 const moment = require('moment');
@@ -74,6 +73,13 @@ class FetchLolMatchInfoJob extends Job {
         let startTime = moment.utc(apiResult.gameCreation);
         let endTime = moment.utc(apiResult.gameCreation).add(apiResult.gameDuration, 'seconds');
 
+        let minimumGameLength = 12 * 60;
+        if (apiResult.gameDuration < minimumGameLength) {
+            // The library used to determine roles requires at least 12 minutes of Game time
+            // additionally games took less than 12m are likely of very low quality.
+            return this;
+        }
+
         let winningTeam = apiResult.teams.find(teamInfo => teamInfo.win === 'Win');
         let winningTeamId = winningTeam.teamId;
 
@@ -92,16 +98,11 @@ class FetchLolMatchInfoJob extends Job {
 
         for (let participantIndex in apiResult.participants) {
             let participant = apiResult.participants[participantIndex];
-            let role = lolData.getRoleByNativeLolRoleLane(participant.timeline.role, participant.timeline.lane);
-            if (role === undefined || role === null) {
-                // TODO: handle no role found. This is fairly common
-                role = `${participant.timeline.lane} - ${participant.timeline.role}`;
-            }
+
             let participantInfo = {
                 participantId: participant.participantId,
                 teamId: participant.teamId,
                 championId: participant.championId,
-                role,
             };
 
             participants[participantInfo.participantId] = participantInfo;
@@ -124,16 +125,22 @@ class FetchLolMatchInfoJob extends Job {
             Object.assign(participants[identityInfo.participantId], identityInfo);
         }
 
+
+        let participantMapping = {
+            // participantId: lol_match_participant.id
+        };
+
         // Save all our participant info
         let matchId = lolMatch.id;
         for (let participantId in participants) {
-            let participant = participants[participantId];
+            let participantInfo = participants[participantId];
             try {
-                await db.lolMatchParticipant.createNew(
-                    matchId, participant.teamId, participant.championId,
-                    participant.role, participant.summonerName, participant.accountId,
-                    participant.historyAccountId
+                 let participant = await db.lolMatchParticipant.createNew(
+                    matchId, participantInfo.teamId, participantInfo.championId,
+                    participantInfo.summonerName, participantInfo.accountId,
                 );
+
+                participantMapping[participantId] = participant.id;
             } catch (sqlError) {
                 this.errors = `Error saving lol_match_participant to DB - ${sqlError.message}`;
                 this.logErrors();
@@ -142,12 +149,12 @@ class FetchLolMatchInfoJob extends Job {
             }
         }
 
-        // and finally create an associate job
-        let payload = { matchId };
+        // and finally create a determine roles job
+        let payload = { matchId, participantMapping };
         try {
-            await db.jobs.createNewJob(jobTypes.ASSOCIATE_LOL_MATCH_TO_TWITCH_VOD, payload);
+            await db.jobs.createNewJob(jobTypes.DETERMINE_LOL_MATCH_ROLES, payload);
         } catch (sqlError) {
-            this.errors = `SQL error when creating ASSOCIATE job - ${sqlError.message}`;
+            this.errors = `SQL error when creating determine roles job - ${sqlError.message}`;
             this.logErrors();
             console.error(sqlError);
             return this;

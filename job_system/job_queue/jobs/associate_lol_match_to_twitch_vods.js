@@ -29,7 +29,7 @@ class AssociateLolMatchToTwitchVodsJob extends Job {
 
         let matchParticipants;
         try {
-            matchParticipants = await db.lolMatchParticipant.findByMatchId(this.matchId);
+            matchParticipants = await db.lolMatchParticipant.getByMatchId(this.matchId);
         } catch (sqlError) {
             this.errors = `SQL Error while finding lol match participants - ${sqlError.message}`;
             this.logErrors();
