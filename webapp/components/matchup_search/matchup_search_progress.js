@@ -19,13 +19,13 @@ const ProgressBox = (props) => {
             {/*language=CSS*/}
             <style jsx>{`
             .imgBox {
-                border: 0.25em solid black;
+                border: 0.25em solid #333;
                 height: 80px;
                 width: 80px;
             }
             
             .imgBox.active {
-                border-color: greenyellow;
+                border-color: #c8aa6e;
             }
             
             img {
