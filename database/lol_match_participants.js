@@ -4,7 +4,7 @@ function createNew(matchId, teamId, championId, summonerName, nativeSummonerId) 
     let query = "" +
         "INSERT INTO lol_match_participants " +
         "(lol_match_id, team_id, champion_id, summoner_name, native_summoner_id) " +
-        "VALUES ($1, $2, $3, $4, $5, $6) RETURNING *";
+        "VALUES ($1, $2, $3, $4, $5) RETURNING *";
     let params = [matchId, teamId, championId, summonerName, nativeSummonerId];
 
     return db.queryOne(query, params);

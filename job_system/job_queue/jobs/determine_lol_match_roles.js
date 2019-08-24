@@ -86,9 +86,8 @@ class DetermineLolMatchRolesJob extends Job {
             roleCount++;
 
             if (roleCount === 3) {
-                this.errors = `RoleML Role detection un-successful found 3 ${role}`;
-                this.logErrors();
-
+                // No error here since we know the script isn't perfect.
+                // we can just ignore here. Probably want to delete the match & participants though
                 return this;
             }
 

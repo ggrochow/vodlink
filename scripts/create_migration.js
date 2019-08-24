@@ -5,10 +5,12 @@
  */
 
 const fs = require("fs");
-const MIGRATION_FOLDER_PATH = "database/setup/migrations/"; // From project root
+const MIGRATION_FOLDER_PATH = "database/migrations/"; // From project root
 
 let timestamp = new Date().getTime();
-let argv_name = process.argv[2] || "";
-let file_name = `${timestamp}_${argv_name}.sql`;
+let argvName = process.argv[2] || "";
+let upFileName = `${timestamp}.do.${argvName}.sql`;
+let downFileName = `${timestamp}.undo.${argvName}.sql`;
 
-fs.closeSync(fs.openSync(`${MIGRATION_FOLDER_PATH}${file_name}`, 'a'));
+fs.closeSync(fs.openSync(`${MIGRATION_FOLDER_PATH}${upFileName}`, 'a'));
+fs.closeSync(fs.openSync(`${MIGRATION_FOLDER_PATH}${downFileName}`, 'a'));

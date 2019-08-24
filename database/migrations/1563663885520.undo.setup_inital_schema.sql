@@ -1,0 +1,9 @@
+DROP TABLE twitch_channels;
+DROP TABLE lol_summoners;
+DROP TABLE twitch_vods;
+DROP TABLE lol_matches;
+DROP TABLE lol_match_participants;
+DROP TABLE lol_match_twitch_vods;
+DROP TABLE jobs;
+DROP TYPE job_type_enum;
+DROP TYPE job_status_enum;

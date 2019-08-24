@@ -8,6 +8,8 @@
     "build": "next build webapp",
     "start": "next start webapp",
     "create_migration": "node scripts/create_migration.js",
+    "migrate_database": "node scripts/migrate_database.js",
+    "rollback_migration": "node scripts/rollback_database.js",
     "seed_database": "node scripts/initial_seed.js",
     "update_champion_json": "node scripts/fetch_champion_json.js"
   },
@@ -22,6 +24,7 @@
     "next": "^9.0.3",
     "pg": "^7.12.0",
     "pg-promise": "^9.0.0",
+    "postgrator": "^3.10.2",
     "python-shell": "^1.0.8",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
