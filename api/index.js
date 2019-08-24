@@ -56,7 +56,9 @@ app.get('/api/vodLink', (req, res) => {
         })
 });
 
-module.exports = app;
 
 // TODO: response caching
 // TODO: proper cors handling
+logger.info("Starting express api");
+let port = process.env.API_PORT;
+app.listen(port, () => logger.info(`api listening on ${port}`));
