@@ -55,6 +55,11 @@ class FetchLolMatchesDuringVodJob extends Job {
         try {
             apiResults = await lolApi.getMatchesForAccountInPeriod(lolSummoner.region, lolSummoner.native_summoner_id, startTime, endTime);
         } catch (apiError) {
+            if (apiError.statusCode === 429 || apiError.statusCode >= 500) {
+                this.setToRetry();
+                return this;
+            }
+
             if (apiError.statusCode === 404) {
                 // 404 is returned if no results are found
                 logger.verbose(`${this.logPrefix()} got 404 while searching for games, assuming that means none found for this vod`);

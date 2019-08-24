@@ -139,7 +139,6 @@ class DetermineLolMatchRolesJob extends Job {
                 },
                 (err, results) => {
                     if (err) {
-                        debugger;
                         reject(err);
                     } else {
                         let json = JSON.parse(results[0]);

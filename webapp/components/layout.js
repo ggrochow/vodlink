@@ -19,7 +19,7 @@ const Layout = props => (
         {/*language=SCSS*/}
         <style jsx>{`
           div.body {
-            min-height: calc(100vh - 120px);
+            min-height: calc(100vh - 150px);
           }
           
           div.footer {

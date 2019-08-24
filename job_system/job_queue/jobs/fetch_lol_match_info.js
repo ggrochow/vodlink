@@ -58,6 +58,11 @@ class FetchLolMatchInfoJob extends Job {
         try {
             apiResult = await lolApi.getMatchInfoById(this.region, this.nativeMatchId);
         } catch (apiError) {
+            if (apiError.statusCode === 429 || apiError.statusCode >= 500) {
+                this.setToRetry();
+                return this;
+            }
+
             this.errors = `Error while retrieving match info from lol api - ${apiError.message}`;
             this.logErrors();
             console.error(apiError);

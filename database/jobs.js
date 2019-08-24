@@ -43,11 +43,19 @@ function setJobToError(id, errors) {
     return db.queryOne(query, params);
 }
 
+function setJobToRetry(id, payload) {
+    let query = 'UPDATE jobs SET (status, payload) = ($1, $2) WHERE id = $3 RETURNING *';
+    let params = [jobStatusTypes.RETRY, payload, id];
+
+    return db.queryOne(query, params);
+}
+
 module.exports = {
     createNewJob,
     getRunnableJobOfType,
     setJobToRunning,
     setJobToFinished,
     setJobToError,
+    setJobToRetry,
 };
 

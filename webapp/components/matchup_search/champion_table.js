@@ -33,17 +33,13 @@ const ChampionTable = (props) => {
                     justify-content: center;
                     align-content: center;
                 }
-                    
+                
                 img {
                     max-height: 75px;
                     max-width: 75px;
                     cursor: pointer;
                 }
 
-                img.disabled {
-                    filter: grayscale(1);
-                }
-                    
             `}</style>
         </div>
     )

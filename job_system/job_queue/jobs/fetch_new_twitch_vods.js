@@ -27,8 +27,6 @@ class FetchNewTwitchVodsJob extends Job {
         return this.payload.cursor;
     }
 
-
-
     async run() {
         // Get Channel info from our database
         let twitchChannel;
@@ -54,12 +52,16 @@ class FetchNewTwitchVodsJob extends Job {
         try {
             apiResult = await twitchApi.getVodsForChannel(nativeChannelId, this.cursor);
         } catch (apiError) {
+            if (apiError.statusCode === 429 || apiError.statusCode >= 500) {
+                this.setToRetry();
+                return this;
+            }
+
             this.errors = `Error retrieving vods from twitch API - ${apiError.message}`;
             this.logErrors();
             console.error(apiError);
             return this;
         }
-
 
         // If we hit the max page size, create another FETCH_NEW_TWITCH_VODS job with cursor info.
         if (apiResult.data.length === 100) {

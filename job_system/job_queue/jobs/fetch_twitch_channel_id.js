@@ -32,7 +32,11 @@ class FetchTwitchChannelIdJob extends Job {
         try {
             apiResult = await twitchApi.getUserInfoFromChannelName(this.channelName);
         } catch (apiError) {
-            // TODO testing
+            if (apiError.statusCode === 429 || apiError.statusCode >= 500) {
+                this.setToRetry();
+                return this;
+            }
+
             this.errors = `error while fetching twitch channel info - ${apiError.message}`;
             this.logErrors();
             console.error(apiError);

@@ -22,12 +22,25 @@ class Job {
         this.jobRows.errors = errorMessage;
     }
 
+    get retryCount() {
+        return this.payload.retryCount || 0;
+    }
+
+    set retryCount(count) {
+        this.payload.retryCount = count;
+    }
+
     get payload() {
         return this.jobRows.payload;
     }
 
     get id() {
         return this.jobRows.id;
+    }
+
+    setToRetry() {
+        this.retry = true;
+        this.retryCount = this.retryCount + 1;
     }
 
     logPrefix() {

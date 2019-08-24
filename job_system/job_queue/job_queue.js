@@ -86,6 +86,26 @@ class JobQueue {
         // set to ERROR with messages in block
     }
 
+    async retryJob(job) {
+        logger.verbose(`Job Queue ${this.name} starting retryJob( id: ${job.id})`);
+
+        if (job.retryCount > 5) {
+            job.errors = 'Attempted to retry job too many times';
+            await this.errorJob(job);
+            return;
+        }
+
+        try {
+            await db.jobs.setJobToRetry(job.id, job.payload)
+        } catch (err) {
+            logger.error(err.message);
+            console.err(err);
+        }
+
+        this.timeOfLastFinishedJob = new Date().getTime();
+        this.currentJob = null;
+    }
+
     getNewJob() {
         logger.verbose(`Job Queue ${this.name} starting getNewJob()`);
         return db.jobs.getRunnableJobOfType(this.jobTypeArray);
@@ -131,10 +151,12 @@ class JobQueue {
 
             job = await this.runJob(job);
 
-            if (job.errors === null) {
-                await this.finishJob(job);
-            } else {
+            if (job.retry === true) {
+                await this.retryJob(job);
+            } else if (job.errors !== null) {
                 await this.errorJob(job);
+            } else {
+                await this.finishJob(job);
             }
 
         } catch (err) {
