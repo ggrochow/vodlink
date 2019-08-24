@@ -8,7 +8,7 @@ python 64bit 3.7.4
 ### Setup
 * Ensure all requirements are installed at the correct version.
 * Create postgres DB
-* Populate ENV file
+* Populate .env file `cp example.env .env`
 * `npm install`
 * `npm run migrate_database`
 * `npm run seed-database`

@@ -1,6 +1,6 @@
 export function lolRoleImageUrl(role) {
     if (role) {
-        return `/static/${role}.png`;
+        return `/static/${role.toLowerCase()}.png`;
     }
 }
 
