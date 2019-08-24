@@ -4,6 +4,7 @@ import MatchupSearchProgress from "./matchup_search/matchup_search_progress";
 import ChampionTable from './matchup_search/champion_table'
 import ResultsTable from "./matchup_search/results_table";
 import LoadingSpinner from "./layout/loading_spinner";
+import ErrorText from "./layout/error_text";
 import getConfig from 'next/config';
 const { publicRuntimeConfig } = getConfig();
 
@@ -46,7 +47,10 @@ class MatchupSearch extends React.Component {
                 });
             })
             .catch(err => {
-                this.setState({errorText: 'F', loading: false});
+                this.setState({
+                    errorText: 'Server Error fetching VodLink results.',
+                    loading: false,
+                });
                 console.error(err);
             });
     }
@@ -55,7 +59,11 @@ class MatchupSearch extends React.Component {
         fetchOppChampIdsByRoleAndPlayerChamp(championId) {
             let {role} = this.state;
 
-            this.setState({loading: true, playerChampion: championId});
+            this.setState({
+                loading: true,
+                playerChampion: championId,
+                errorTest: null,
+            });
 
             let url = new URL(`${API_BASE_URL}opponentChampionIdsByRoleAndChampion`);
             url.searchParams.append('role', this.state.role);
@@ -78,14 +86,22 @@ class MatchupSearch extends React.Component {
                     })
                 })
                 .catch(err => {
-                    this.setState({errorText: 'F', loading: false});
+                    this.setState({
+                        errorText: 'Server error filtering enemy champions. Some champions might not have any results.',
+                        loading: false,
+                        currentStep: 3
+                    });
                     console.error(err);
                 })
 
         }
 
     fetchChampionIdsByRole(role) {
-        this.setState({loading: true, role });
+        this.setState({
+            role,
+            errorTest: null,
+            loading: true,
+        });
 
         let url = new URL(`${API_BASE_URL}championIdsByRole`);
         url.searchParams.append('role', role);
@@ -105,7 +121,11 @@ class MatchupSearch extends React.Component {
                 });
             })
             .catch(err => {
-                this.setState({ errorText: 'F', loading: false });
+                this.setState({
+                    errorText: 'Server error filtering champions by role. Some champions might not have any results.',
+                    loading: false,
+                    currentStep: 2
+                });
                 console.error(err);
             })
     }
@@ -169,13 +189,14 @@ class MatchupSearch extends React.Component {
         return () => {
             this.setState({
                 opponentChampion: championId,
-                loading: true
+                loading: true,
+                errorText: null,
             }, this.fetchVodLinks);
         }
     }
 
     render() {
-        let { role, playerChampion, opponentChampion, currentStep, loading, vodLinkResults } = this.state;
+        let { role, playerChampion, opponentChampion, currentStep, loading, vodLinkResults, errorText } = this.state;
         let validChamps = this.state.championIdsByRole[role];
         let validOppChamps;
         let oppChampsByRole = this.state.oppChampionIdsByRoleAndChampId[role];
@@ -194,6 +215,13 @@ class MatchupSearch extends React.Component {
                 />
 
                 <hr/>
+
+                { errorText !== null && (
+                    <ErrorText>
+                        {errorText}
+                        <hr/>
+                    </ErrorText>
+                )}
 
                 { loading && (
                     <LoadingSpinner/>
