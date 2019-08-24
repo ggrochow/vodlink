@@ -3,7 +3,12 @@ import RoleSelect from "./matchup_search/role_select";
 import MatchupSearchProgress from "./matchup_search/matchup_search_progress";
 import ChampionTable from './matchup_search/champion_table'
 import ResultsTable from "./matchup_search/results_table";
-const API_BASE_URL = "http://localhost:3001/api/";
+import LoadingSpinner from "./layout/loading_spinner";
+import getConfig from 'next/config';
+const { publicRuntimeConfig } = getConfig();
+
+const API_BASE_URL = publicRuntimeConfig.apiUrl;
+
 
 class MatchupSearch extends React.Component {
 
@@ -11,9 +16,8 @@ class MatchupSearch extends React.Component {
         super(props);
         this.state = {
             currentStep: 1,
-            // step 0 = intro           step 1 = role select
-            // step 2 = champ select    step 3 = opp champ select
-            // step 4 = results
+            // step 1 = role select         step 2 = champ select
+            // step 3 = opp champ select    step 4 = results
             role: null,
             playerChampion: null,
             opponentChampion: null,
@@ -192,7 +196,7 @@ class MatchupSearch extends React.Component {
                 <hr/>
 
                 { loading && (
-                    <p>Loading...</p>
+                    <LoadingSpinner/>
                 )}
 
                 { currentStep === 1 && !loading && (

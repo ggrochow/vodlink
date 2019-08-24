@@ -4,7 +4,7 @@ const { simple, padLevels, combine } = winston.format;
 
 // Development logger
 const logger = winston.createLogger({
-    level: "debug",
+    level: "info",
     format: combine(
         simple(),
         padLevels(),
