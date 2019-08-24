@@ -5,23 +5,24 @@ const db = require('./raw_queries');
  * @param role lol role string
  */
 function getChampionIdsByRole(role) {
-    let query ='' +
-        'SELECT ' +
-        '   DISTINCT participant.champion_id ' +
-        'FROM ' +
-        '   lol_match_twitch_vods AS relation ' +
-        'JOIN lol_matches AS match on ' +
-        '   match.id = relation.lol_match_id ' +
-        'JOIN lol_match_participants AS participant ON ' +
-        '   participant.lol_match_id = relation.lol_match_id ' +
-        'JOIN lol_summoners AS summoner ON ' +
-        '   participant.native_summoner_id = summoner.native_summoner_id ' +
-        'JOIN lol_match_participants AS opponent ON ' +
-        '   match.id = opponent.lol_match_id ' +
-        '   AND participant.role = opponent.role' +
-        '   AND participant.team_id != opponent.team_id ' +
-        'WHERE ' +
-        '   participant.role = $1';
+    let query = `
+select
+	distinct participant.champion_id
+from
+	lol_match_twitch_vods as relation
+join lol_matches as match on
+	match.id = relation.lol_match_id
+join lol_match_participants as participant on
+	participant.lol_match_id = relation.lol_match_id
+join lol_summoners as summoner on
+	participant.native_summoner_id = summoner.native_summoner_id
+join lol_match_participants as opponent on
+	match.id = opponent.lol_match_id
+	and participant.role = opponent.role
+	and participant.team_id != opponent.team_id
+where
+	participant.role = $1
+    `;
 
     let params = [role];
 
@@ -34,64 +35,65 @@ function getChampionIdsByRole(role) {
  * @param championId lol championId
  */
 function getOpponentChampionIdsByRoleAndOurChampion(role, championId) {
-    let query = '' +
-        'SELECT ' +
-        '   DISTINCT opponent.champion_id ' +
-        'FROM ' +
-        '   lol_match_twitch_vods AS relation ' +
-        'JOIN twitch_vods as vod ON ' +
-        '   vod.id = relation.twitch_vod_id ' +
-        'JOIN lol_matches AS match ON ' +
-        '   match.id = relation.lol_match_id ' +
-        'JOIN lol_match_participants AS participant ON ' +
-        '   match.id = participant.lol_match_id ' +
-        'JOIN lol_summoners AS summoner ON ' +
-        '   participant.native_summoner_id = summoner.native_summoner_id ' +
-        'JOIN lol_match_participants AS opponent ON ' +
-        '   match.id = opponent.lol_match_id ' +
-        '   AND participant.role = opponent.role' +
-        '   AND participant.team_id != opponent.team_id ' +
-        'WHERE ' +
-        '   participant.role = $1 ' +
-        '   AND participant.champion_id = $2';
-
+    let query = `
+select
+	distinct opponent.champion_id
+from
+	lol_match_twitch_vods as relation
+join twitch_vods as vod on
+	vod.id = relation.twitch_vod_id
+join lol_matches as match on
+	match.id = relation.lol_match_id
+join lol_match_participants as participant on
+	match.id = participant.lol_match_id
+join lol_summoners as summoner on
+	participant.native_summoner_id = summoner.native_summoner_id
+join lol_match_participants as opponent on
+	match.id = opponent.lol_match_id
+	and participant.role = opponent.role
+	and participant.team_id != opponent.team_id
+where
+	participant.role = $1
+	and participant.champion_id = $2 
+	`;
     let params = [role, championId];
 
     return db.query(query, params);
 }
 
 function getVodLinkInfoByMatchUp(role, championId, opponentChampionId) {
-    let query = '' +
-        'SELECT ' +
-        '   relation.id AS id, ' +
-        '   vod.native_vod_id AS vod_id, ' +
-        '   relation.vod_timestamp AS vod_offset_seconds, ' +
-        '   match.native_match_id AS native_match_id, ' +
-        '   channel.channel_name AS streamer_name, '+
-        '   summoner.summoner_name AS summoner_name, ' +
-        '   summoner.region AS region, ' +
-        '   opponent.summoner_name AS opp_name ' +
-        'FROM ' +
-        '   lol_match_twitch_vods AS relation ' +
-        'JOIN twitch_vods AS vod ON ' +
-        '   vod.id = relation.twitch_vod_id ' +
-        'JOIN twitch_channels as channel ON ' +
-        '   channel.id = vod.twitch_channel_id ' +
-        'JOIN lol_matches AS match ON ' +
-        '   match.id = relation.lol_match_id ' +
-        'JOIN lol_match_participants AS participant ON ' +
-        '   match.id = participant.lol_match_id ' +
-        'JOIN lol_summoners AS summoner ON ' +
-        '   participant.native_summoner_id = summoner.native_summoner_id ' +
-        'JOIN lol_match_participants AS opponent ON ' +
-        '   match.id = opponent.lol_match_id ' +
-        '   AND participant.team_id != opponent.team_id ' +
-        '   AND participant.role = opponent.role ' +
-        'WHERE ' +
-        '   participant.role = $1 ' +
-        '   AND participant.champion_id = $2 ' +
-        '   AND opponent.champion_id = $3';
-
+    let query = `
+select
+	relation.id as id,
+	vod.native_vod_id as vod_id,
+	relation.vod_timestamp as vod_offset_seconds,
+	match.native_match_id as native_match_id,
+	channel.channel_name as streamer_name,
+	summoner.summoner_name as summoner_name,
+	summoner.region as region,
+	opponent.summoner_name as opp_name
+from
+	lol_match_twitch_vods as relation
+join lol_matches as match on
+	match.id = relation.lol_match_id
+join lol_match_participants as participant on
+	match.id = participant.lol_match_id
+join lol_summoners as summoner on
+	participant.native_summoner_id = summoner.native_summoner_id
+join twitch_channels as channel on
+	channel.id = summoner.twitch_channel_id
+join twitch_vods as vod on
+	vod.id = relation.twitch_vod_id
+	and vod.twitch_channel_id = channel.id
+join lol_match_participants as opponent on
+	match.id = opponent.lol_match_id
+	and participant.team_id != opponent.team_id
+	and participant.role = opponent.role
+where
+	participant.role = $1
+	and participant.champion_id = $2
+	and opponent.champion_id = $3
+    `;
     let params = [role, championId, opponentChampionId];
 
 
