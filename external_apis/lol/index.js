@@ -19,7 +19,7 @@ function request(url, queryParams = {}) {
 }
 
 function getAccountInfoFromSummonerName(region, summonerName) {
-    let url = `${baseUrl(region)}/lol/summoner/v4/summoners/by-name/${summonerName}`;
+    let url = `${baseUrl(region)}/lol/summoner/v4/summoners/by-name/${encodeURIComponent(summonerName)}`;
 
     return request(url);
 }
