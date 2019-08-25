@@ -1,0 +1,321 @@
+{
+  "channels": [
+    {
+      "twitch_name": "parnstarzilean",
+      "lol_accounts": [
+        {
+          "region": "euw1",
+          "name": "ZVLVZVLZVLZLVZLZ"
+        }
+      ]
+    },
+    {
+      "twitch_name": "rangerzx",
+      "lol_accounts": [
+        {
+          "region": "euw1",
+          "name": "sakuuu"
+        },
+        {
+          "region": "euw1",
+          "name": "RAPTΟR"
+        }
+      ]
+    },
+    {
+      "twitch_name": "riste",
+      "lol_accounts": [
+        {
+          "region": "na1",
+          "name": "riste"
+        },
+        {
+          "region": "na1",
+          "name": "DEMACIA BABY"
+        }
+      ]
+    },
+    {
+      "twitch_name": "mcbaze",
+      "lol_accounts": [
+        {
+          "region": "na1",
+          "name": "McBayze"
+        },
+        {
+          "region": "na1",
+          "name": "Mcbaze"
+        }
+      ]
+    },
+    {
+      "twitch_name": "imls",
+      "lol_accounts": [
+        {
+          "region": "kr",
+          "name": "otemp404"
+        }
+      ]
+    },
+    {
+      "twitch_name": "maxwaldo",
+      "lol_accounts": [
+        {
+          "region": "kr",
+          "name": "donna waldo"
+        },
+        {
+          "region": "kr",
+          "name": "tacobell"
+        }
+      ]
+    },
+    {
+      "twitch_name": "nasteeylol",
+      "lol_accounts": [
+        {
+          "region": "na1",
+          "name": "Nasteey"
+        }
+      ]
+    },
+    {
+      "twitch_name": "Lohpally",
+      "lol_accounts": [
+        {
+          "region": "na1",
+          "name": "twtv Lohpally"
+        }
+      ]
+    },
+    {
+      "twitch_name": "Nylanaaa",
+      "lol_accounts": [
+        {
+          "region": "euw1",
+          "name": "Nylanaaa"
+        },
+        {
+          "region": "euw1",
+          "name": "Nylana"
+        }
+      ]
+    },
+    {
+      "twitch_name": "Aphromoo",
+      "lol_accounts": [
+        {
+          "region": "na1",
+          "name": "zebuum"
+        }
+      ]
+    },
+    {
+      "twitch_name": "foggedftw2",
+      "lol_accounts": [
+        {
+          "region": "na1",
+          "name": "John Wickdamere"
+        },
+        {
+          "region": "na1",
+          "name": "foggedftw3"
+        },
+        {
+          "region": "na1",
+          "name": "foggedftw2"
+        }
+      ]
+    },
+    {
+      "twitch_name": "Jackspektra",
+      "lol_accounts": [
+        {
+          "region": "euw1",
+          "name": "SPKTR"
+        }
+      ]
+    },
+    {
+      "twitch_name": "azzapp",
+      "lol_accounts": [
+        {
+          "region": "na1",
+          "name": "Azzapp v2"
+        },
+        {
+          "region": "euw1",
+          "name": "Azzapp"
+        }
+      ]
+    },
+    {
+      "twitch_name": "gosu",
+      "lol_accounts": [
+        {
+          "region": "na1",
+          "name": "lIlIlIlIlllII"
+        },
+        {
+          "region": "na1",
+          "name": "Vintage1"
+        }
+      ]
+    },
+    {
+      "twitch_name": "xfsn_saber",
+      "lol_accounts": [
+        {
+          "region": "na1",
+          "name": " xFSN Saber"
+        }
+      ]
+    },
+    {
+      "twitch_name": "Yamikazexz",
+      "lol_accounts": [
+        {
+          "region": "na1",
+          "name": "Yamikaze"
+        }
+      ]
+    },
+    {
+      "twitch_name": "ikeepittaco",
+      "lol_accounts": [
+        {
+          "region": "na1",
+          "name": "Lejhind"
+        },
+        {
+          "region": "na1",
+          "name": " Jordanian Sniper"
+        }
+      ]
+    },
+    {
+      "twitch_name": "nono_lol",
+      "lol_accounts": [
+        {
+          "region": "euw1",
+          "name": "NonoToday"
+        }
+      ]
+    },
+    {
+      "twitch_name": "bizzleberry",
+      "lol_accounts": [
+        {
+          "region": "euw1",
+          "name": "Bizzleberry"
+        }
+      ]
+    },
+    {
+      "twitch_name": "karasmai",
+      "lol_accounts": [
+        {
+          "region": "na1",
+          "name": "DominationSeeker"
+        },
+        {
+          "region": "na1",
+          "name": "GothKaynSinner"
+        },
+        {
+          "region": "na1",
+          "name": "Karasmai Return"
+        },
+        {
+          "region": "na1",
+          "name": "Karasmaiv9"
+        }
+      ]
+    },
+    {
+      "twitch_name": "rto_lol",
+      "lol_accounts": [
+        {
+          "region": "na1",
+          "name": "RTO"
+        },
+        {
+          "region": "na1",
+          "name": "RTO 1 v 9"
+        }
+      ]
+    },
+    {
+      "twitch_name": "ireliacarriesu",
+      "lol_accounts": [
+        {
+          "region": "na1",
+          "name": "Irelia Carries U"
+        }
+      ]
+    },
+    {
+      "twitch_name": "1adrianaries1",
+      "lol_accounts": [
+        {
+          "region": "na1",
+          "name": "Adrian Riven"
+        }
+      ]
+    },
+    {
+      "twitch_name": "tfblade",
+      "lol_accounts": [
+        {
+          "region": "tr1",
+          "name": "14 days Rank 1"
+        }
+      ]
+    },
+    {
+      "twitch_name": "katevolved",
+      "lol_accounts": [
+        {
+          "region": "na1",
+          "name": "S8 Diamond Ego"
+        },
+        {
+          "region": "na1",
+          "name": "GAMERGIRL2"
+        },
+        {
+          "region": "na1",
+          "name": "KatEvolved"
+        }
+      ]
+    },
+    {
+      "twitch_name": "scrubnoob",
+      "lol_accounts": [
+        {
+          "region": "na1",
+          "name": "Rafilía"
+        }
+      ]
+    },
+    {
+      "twitch_name": "erick_dota",
+      "lol_accounts": [
+        {
+          "region": "na1",
+          "name": "Erick Dota"
+        }
+      ]
+    },
+    {
+      "twitch_name": "LinCass",
+      "lol_accounts": [
+        {
+          "region": "eun1",
+          "name": "twitchtv LinCass"
+        }
+      ]
+    }
+
+  ]
+}

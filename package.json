@@ -11,7 +11,8 @@
     "migrate_database": "node scripts/migrate_database.js",
     "rollback_migration": "node scripts/rollback_database.js",
     "seed_database": "node scripts/initial_seed.js",
-    "update_champion_json": "node scripts/fetch_champion_json.js"
+    "update_champion_json": "node scripts/fetch_champion_json.js",
+    "add_new_twich_accounts": "node scripts/add_new_twitch_channels.js"
   },
   "author": "",
   "license": "ISC",
