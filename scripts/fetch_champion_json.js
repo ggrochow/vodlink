@@ -29,7 +29,7 @@ async function run() {
             name: championInfo.name,
             id: championInfo.id,
             key: championInfo.key,
-            imageUrl: `http://ddragon.leagueoflegends.com/cdn/${championVersion}/img/champion/${championInfo.id}.png`,
+            imageUrl: `https://ddragon.leagueoflegends.com/cdn/${championVersion}/img/champion/${championInfo.id}.png`,
         };
     }
 

@@ -12,7 +12,7 @@ let logger = winston.createLogger({
 });
 
 if (process.env.NODE_ENV === 'production') {
-    logger.add(new winston.transports.File({fileName: 'error.log', level: 'error' }));
+    logger.add(new winston.transports.File({filename: 'error.log', level: 'error' }));
 } else {
     logger.add(new winston.transports.Console);
 }
