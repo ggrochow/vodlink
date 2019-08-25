@@ -7,6 +7,7 @@ const lolData = require('../../../lol_data');
 
 const pythonScriptDirPath = 'python';
 const pythonScriptPath = 'determine_roles.py';
+const pythonPath = process.env.PYTHON_PATH;
 
 /**
  * Job to determine each participants roles in a LoL match. Needed due to the inaccuracy of api results
@@ -130,6 +131,7 @@ class DetermineLolMatchRolesJob extends Job {
                 pythonScriptPath,
                 {
                     scriptPath: pythonScriptDirPath,
+                    pythonPath: pythonPath,
                     args: [
                         region,
                         matchId,

@@ -4,14 +4,14 @@ const { simple, padLevels, combine } = winston.format;
 
 // Development logger
 let logger = winston.createLogger({
-    level: "info",
+    level: "debug",
     format: combine(
         simple(),
         padLevels(),
     )
 });
 
-if (process.env.NOVE_ENV === 'production') {
+if (process.env.NODE_ENV === 'production') {
     logger.add(new winston.transports.File({fileName: 'error.log', level: 'error' }));
 } else {
     logger.add(new winston.transports.Console);
