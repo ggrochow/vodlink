@@ -20,6 +20,7 @@ class Job {
 
     set errors(errorMessage) {
         this.jobRows.errors = errorMessage;
+        this.logErrors();
     }
 
     get retryCount() {

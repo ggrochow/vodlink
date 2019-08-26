@@ -4,6 +4,7 @@ const jobTypes = require('./job_types');
 const twitchJobTypes = [
     jobTypes.FETCH_TWITCH_CHANNEL_ID,
     jobTypes.FETCH_NEW_TWITCH_VODS,
+    jobTypes.CHECK_VOD_EXISTENCE,
     // jobTypes.CLEANUP_EXPIRED_TWITCH_VODS,
 ];
 // https://dev.twitch.tv/docs/api/guide/#rate-limits

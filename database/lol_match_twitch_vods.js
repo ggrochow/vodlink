@@ -17,7 +17,15 @@ function findByMatchAndVodId(matchId, vodId) {
     return db.queryOne(query, params);
 }
 
+function deleteByVodId(vodId) {
+    let query = 'DELETE FROM lol_match_twitch_vods WHERE twitch_vod_id  = $1';
+    let params = [vodId];
+
+    return db.query(query, params);
+}
+
 module.exports = {
     createNew,
-    findByMatchAndVodId
+    findByMatchAndVodId,
+    deleteByVodId,
 };

@@ -33,7 +33,6 @@ class FetchLolMatchInfoJob extends Job {
             lolMatch = await db.lolMatches.getByRegionAndNativeId(this.region, this.nativeMatchId);
         } catch (sqlError) {
             this.errors = `SQLError attempting to retrieve existing match from DB - ${sqlError.message}`;
-            this.logErrors();
             console.error(sqlError);
             return this;
         }
@@ -47,7 +46,6 @@ class FetchLolMatchInfoJob extends Job {
                 return this;
             } catch (sqlError) {
                 this.errors = `SQL error when creating ASSOCIATE job - ${sqlError.message}`;
-                this.logErrors();
                 console.error(sqlError);
                 return this;
             }
@@ -64,7 +62,6 @@ class FetchLolMatchInfoJob extends Job {
             }
 
             this.errors = `Error while retrieving match info from lol api - ${apiError.message}`;
-            this.logErrors();
             console.error(apiError);
             return this;
         }
@@ -92,7 +89,6 @@ class FetchLolMatchInfoJob extends Job {
             lolMatch = await db.lolMatches.createNew(this.nativeMatchId, winningTeamId, startTime, endTime, this.region);
         } catch (sqlError) {
             this.errors = `Error saving lolMatch to database - ${sqlError.message}`;
-            this.logErrors();
             console.error(sqlError);
             return this;
         }
@@ -148,7 +144,6 @@ class FetchLolMatchInfoJob extends Job {
                 participantMapping[participantId] = participant.id;
             } catch (sqlError) {
                 this.errors = `Error saving lol_match_participant to DB - ${sqlError.message}`;
-                this.logErrors();
                 console.error(sqlError);
                 return this;
             }
@@ -160,7 +155,6 @@ class FetchLolMatchInfoJob extends Job {
             await db.jobs.createNewJob(jobTypes.DETERMINE_LOL_MATCH_ROLES, payload);
         } catch (sqlError) {
             this.errors = `SQL error when creating determine roles job - ${sqlError.message}`;
-            this.logErrors();
             console.error(sqlError);
             return this;
         }

@@ -38,7 +38,6 @@ class FetchTwitchChannelIdJob extends Job {
             }
 
             this.errors = `error while fetching twitch channel info - ${apiError.message}`;
-            this.logErrors();
             console.error(apiError);
             return this;
             // Set relevant errors on job, return it.
@@ -47,7 +46,6 @@ class FetchTwitchChannelIdJob extends Job {
         if (apiResult === undefined || apiResult.data.length === 0 || apiResult.data[0].id === undefined) {
             // No results found for name, error this
             this.errors = `No twitch channel with the username ${this.channelName} found via twitchapi`;
-            this.logErrors();
             return this;
         }
 
@@ -58,9 +56,7 @@ class FetchTwitchChannelIdJob extends Job {
         try {
             twitchAccount = await db.twitchAccounts.createNew(twitchName, nativeTwitchId);
         } catch (sqlErr) {
-            // TODO: testing
             this.errors = `SQL error while saving twitch account - ${sqlErr.message}`;
-            this.logErrors();
             console.error(sqlErr);
             return this;
         }
@@ -76,10 +72,7 @@ class FetchTwitchChannelIdJob extends Job {
             try {
                 await db.jobs.createNewJob(jobTypes.FETCH_LOL_SUMMONER_ID, payload);
             } catch (sqlErr) {
-                // do we rollback if it doesnt work? idk
-                // TODO: testing
                 this.errors = `SQL error saving ${jobTypes.FETCH_LOL_SUMMONER_ID} job, ${sqlErr.message}`;
-                this.logErrors();
                 console.error(sqlErr);
                 return this;
             }

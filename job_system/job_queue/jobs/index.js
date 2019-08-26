@@ -7,6 +7,7 @@ const FetchLolMatchesDuringVod = require('./fetch_lol_matches_during_vod');
 const FetchLolMatchInfo = require('./fetch_lol_match_info');
 const DetermineLolMatchRoles = require('./determine_lol_match_roles');
 const AssociateLolMatchToTwitchVods = require('./associate_lol_match_to_twitch_vods');
+const CheckVodExistence = require('./check_vod_existence');
 
 const jobs = {
     [jobTypes.FETCH_TWITCH_CHANNEL_ID]: FetchTwitchChannelId,
@@ -16,6 +17,7 @@ const jobs = {
     [jobTypes.FETCH_LOL_MATCH_INFO]: FetchLolMatchInfo,
     [jobTypes.DETERMINE_LOL_MATCH_ROLES]: DetermineLolMatchRoles,
     [jobTypes.ASSOCIATE_LOL_MATCH_TO_TWITCH_VOD]: AssociateLolMatchToTwitchVods,
+    [jobTypes.CHECK_VOD_EXISTENCE]: CheckVodExistence,
 };
 
 function instantiateJob(jobRows) {

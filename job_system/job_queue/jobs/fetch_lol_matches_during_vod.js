@@ -33,7 +33,6 @@ class FetchLolMatchesDuringVodJob extends Job {
             twitchVod = await db.twitchVods.getById(this.twitchVodId);
         } catch (sqlError) {
             this.errors = `Error fetching twitch vod from database - ${sqlError.message}`;
-            this.logErrors();
             console.error(sqlError);
             return this;
         }
@@ -43,7 +42,6 @@ class FetchLolMatchesDuringVodJob extends Job {
             lolSummoner = await db.lolSummoners.getById(this.lolSummonerId)
         } catch (sqlError) {
             this.errors = `Error fetching twitch vod from database - ${sqlError.message}`;
-            this.logErrors();
             console.error(sqlError);
             return this;
         }
@@ -67,7 +65,6 @@ class FetchLolMatchesDuringVodJob extends Job {
             }
 
             this.errors = `Error fetching lol matchlist from API - ${apiError.message}`;
-            this.logErrors();
             console.error(apiError);
             return this;
         }
@@ -83,7 +80,6 @@ class FetchLolMatchesDuringVodJob extends Job {
                 await db.jobs.createNewJob(jobTypes.FETCH_LOL_MATCH_INFO, payload)
             } catch (sqlError) {
                 this.errors = `Error saving FETCH MATCH INFO job - ${sqlError}`;
-                this.logErrors();
                 console.error(sqlError);
                 return this;
             }

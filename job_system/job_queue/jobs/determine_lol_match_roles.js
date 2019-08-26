@@ -41,14 +41,12 @@ class DetermineLolMatchRolesJob extends Job {
             lolMatch = await db.lolMatches.getById(this.matchId);
         } catch (sqlError) {
             this.errors = `SQL error while finding lolMatch - ${sqlError.message}`;
-            this.logErrors();
             console.error(sqlError);
             return this;
         }
 
         if (lolMatch === undefined) {
             this.errors = `unable to find lol_match with id ${this.matchId}`;
-            this.logErrors();
             return this;
         }
 
@@ -58,14 +56,12 @@ class DetermineLolMatchRolesJob extends Job {
             participants = await db.lolMatchParticipant.getByMatchId(this.matchId);
         } catch (sqlError) {
             this.errors = `SQL error while finding lolMatchParticipants - ${sqlError.message}`;
-            this.logErrors();
             console.error(sqlError);
             return this;
         }
 
         if (participants.length !== 10) {
             this.errors = 'Incorrect # of participants found for match';
-            this.logErrors();
             return this;
         }
 
@@ -74,7 +70,6 @@ class DetermineLolMatchRolesJob extends Job {
             properRoles = await this.runPythonScript(lolMatch.region, lolMatch.native_match_id);
         } catch (error) {
             this.errors = `Error running python determine roles script`;
-            this.logErrors();
             console.error(error);
             return this;
         }
@@ -106,7 +101,6 @@ class DetermineLolMatchRolesJob extends Job {
                 await db.lolMatchParticipant.setRoleById(participantDbId, role);
             } catch (sqlError) {
                 this.errors = `SQL error while setting participant role, id: ${participantDbId}, role: ${role} - ${sqlError.message}`;
-                this.logErrors();
                 console.error(sqlError);
                 return this;
             }
@@ -117,7 +111,6 @@ class DetermineLolMatchRolesJob extends Job {
             await db.jobs.createNewJob(jobTypes.ASSOCIATE_LOL_MATCH_TO_TWITCH_VOD, payload);
         } catch (sqlError) {
             this.errors = `SQL error while creating new associate job - ${sqlError.message}`;
-            this.logErrors();
             console.error(sqlError);
             return this;
         }

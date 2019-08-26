@@ -34,14 +34,12 @@ class FetchNewTwitchVodsJob extends Job {
             twitchChannel = await db.twitchAccounts.getById(this.twitchChannelId);
         } catch (sqlError) {
             this.errors = `Error retrieving twitch account info from DB - ${sqlError.message}`;
-            this.logErrors();
             console.error(sqlError);
             return this;
         }
 
         if (twitchChannel === undefined) {
             this.errors = `No twitch_account with id: ${this.twitchChannelId} found in our DB`;
-            this.logErrors();
             return this;
         }
 
@@ -58,7 +56,6 @@ class FetchNewTwitchVodsJob extends Job {
             }
 
             this.errors = `Error retrieving vods from twitch API - ${apiError.message}`;
-            this.logErrors();
             console.error(apiError);
             return this;
         }
@@ -74,7 +71,6 @@ class FetchNewTwitchVodsJob extends Job {
                 await db.jobs.createNewJob(jobTypes.FETCH_NEW_TWITCH_VODS, payload);
             } catch (sqlError) {
                 this.errors = `Error while creating fetchNewTwitchVods job with pagination cursor - ${sqlError.message}`;
-                this.logErrors();
                 console.error(sqlError);
                 return this;
             }
@@ -91,7 +87,6 @@ class FetchNewTwitchVodsJob extends Job {
             nativeVodIdsInDatabase = nativeVodIdsInDatabase.map(res => res.native_vod_id);
         } catch (sqlError) {
             this.errors = `Error while fetching known vodIds from database - ${sqlError.message}`;
-            this.logErrors();
             console.error(sqlError);
             return this;
         }
@@ -101,7 +96,6 @@ class FetchNewTwitchVodsJob extends Job {
             lolSummoners = await db.lolSummoners.getAllByTwitchId(this.twitchChannelId);
         } catch (sqlError) {
             this.errors = `Error while fetching summoner accounts from database - ${sqlError.message}`;
-            this.logErrors();
             console.error(sqlError);
             return this;
         }
@@ -110,6 +104,13 @@ class FetchNewTwitchVodsJob extends Job {
         let oneMonthAgo = moment().subtract(1, 'month');
         for (let vodIndex in apiResult.data) {
             let vodInfo = apiResult.data[vodIndex];
+
+            if (vodInfo.thumbnail_url === '') {
+                // vods will show up in results while people are still streaming, meaning that vod is still being made.
+                // It seems like the only difference in 'complete' vods and in progress vods is thumbnail_url
+                // empty string is my indicates that the vod is still being made/processed.
+                continue;
+            }
 
             if (vodInfo.viewable !== 'public') {
                 continue;
@@ -133,7 +134,6 @@ class FetchNewTwitchVodsJob extends Job {
                 twitchVod = await db.twitchVods.createNew(startTime, endTime, this.twitchChannelId, nativeVodId);
             } catch (sqlError) {
                 this.errors = `Error while creating twich_vod - ${sqlError.message}`;
-                this.logErrors();
                 console.error(sqlError);
                 return this;
             }
@@ -150,7 +150,6 @@ class FetchNewTwitchVodsJob extends Job {
                     await db.jobs.createNewJob(jobTypes.FETCH_LOL_MATCHES_DURING_VOD, payload)
                 } catch (sqlError) {
                     this.errors = `Error while creating FETCH LOL MATCH JOB - ${sqlError.message}`;
-                    this.logErrors();
                     console.error(sqlError);
                     return this;
                 }

@@ -33,9 +33,24 @@ function findVodPlayedDuringPeriodByAccount(startTime, endTime, twitchAccountId)
     return db.queryOne(query, params);
 }
 
+function deleteById(id) {
+    let query = 'DELETE FROM twitch_vods WHERE id = $1';
+    let params = [id];
+
+    return db.query(query, params);
+}
+
+function getAll() {
+    let query = 'SELECT * FROM twitch_vods';
+
+    return db.query(query);
+}
+
 module.exports = {
     createNew,
     getById,
     getAllNativeVodIdsByTwitchChannelId,
     findVodPlayedDuringPeriodByAccount,
+    deleteById,
+    getAll,
 };

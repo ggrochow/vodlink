@@ -38,7 +38,17 @@ function getVodsForChannel(nativeChannelId, cursor) {
     return request(url, queryParams);
 }
 
+function getVodById(vodId) {
+    let url = `${NEW_API_BASE_URL}/videos`;
+    let queryParams = {
+        id: vodId
+    };
+
+    return request(url, queryParams);
+}
+
 module.exports = {
     getUserInfoFromChannelName,
     getVodsForChannel,
+    getVodById,
 };

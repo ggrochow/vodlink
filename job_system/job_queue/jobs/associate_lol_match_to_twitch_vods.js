@@ -22,7 +22,6 @@ class AssociateLolMatchToTwitchVodsJob extends Job {
             lolMatch = await db.lolMatches.getById(this.matchId);
         } catch (sqlError) {
             this.errors = `SQL Error while finding lol match - ${sqlError.message}`;
-            this.logErrors();
             console.error(sqlError);
             return this;
         }
@@ -32,7 +31,6 @@ class AssociateLolMatchToTwitchVodsJob extends Job {
             matchParticipants = await db.lolMatchParticipant.getByMatchId(this.matchId);
         } catch (sqlError) {
             this.errors = `SQL Error while finding lol match participants - ${sqlError.message}`;
-            this.logErrors();
             console.error(sqlError);
             return this;
         }
@@ -43,14 +41,12 @@ class AssociateLolMatchToTwitchVodsJob extends Job {
             twitchAccounts = await db.twitchAccounts.getByNativeSummonerIds(nativeSummonerIds);
         } catch (sqlError) {
             this.errors = `SQL Error while finding twitch accounts - ${sqlError.message}`;
-            this.logErrors();
             console.error(sqlError);
             return this;
         }
 
         if (twitchAccounts === undefined || twitchAccounts.length === 0) {
             this.errors = `Error, no twitch accounts found in this Lol match`;
-            this.logErrors();
             return this;
         }
 
@@ -65,7 +61,6 @@ class AssociateLolMatchToTwitchVodsJob extends Job {
                 twitchVod = await db.twitchVods.findVodPlayedDuringPeriodByAccount(matchStart, matchEnd, twitchAccount.id);
             } catch (sqlError) {
                 this.errors = `SQL Error while finding twitch vod - ${sqlError.message}`;
-                this.logErrors();
                 console.error(sqlError);
                 return this;
             }
@@ -78,7 +73,6 @@ class AssociateLolMatchToTwitchVodsJob extends Job {
                 twitchVodLolMatchRelation = await db.lolMatchTwitchVods.findByMatchAndVodId(this.matchId, twitchVod.id);
             } catch (sqlError) {
                 this.errors = `SQL Error while finding twitchVodLolMatch relation - ${sqlError.message}`;
-                this.logErrors();
                 console.error(sqlError);
                 return this;
             }
@@ -93,7 +87,6 @@ class AssociateLolMatchToTwitchVodsJob extends Job {
                 await db.lolMatchTwitchVods.createNew(this.matchId, twitchVod.id, secondsFromVodStartToMatchStart);
             } catch (sqlError) {
                 this.errors = `SQL Error while creating twitchVodLolMatch relation - ${sqlError.message}`;
-                this.logErrors();
                 console.error(sqlError);
                 return this;
             }

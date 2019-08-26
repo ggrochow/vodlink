@@ -43,14 +43,12 @@ class FetchLolSummonerIdJob extends Job {
             }
 
             this.errors = `error while fetching summoner account info - ${apiError.message}`;
-            this.logErrors();
             return this;
         }
 
         if (apiResult === undefined || apiResult.accountId === undefined) {
             // no results found?
             this.errors = `No Summoner account found with this name/region combo`;
-            this.logErrors();
             return this;
         }
         let nativeSummonerId = apiResult.accountId;
@@ -61,7 +59,6 @@ class FetchLolSummonerIdJob extends Job {
         } catch (sqlError) {
             // TODO: testing
             this.errors = `SQL error creating summoner account -  ${sqlError.message}`;
-            this.logErrors();
             console.error(sqlError);
             return this;
         }
@@ -72,7 +69,6 @@ class FetchLolSummonerIdJob extends Job {
             await db.jobs.createNewJob(jobTypes.FETCH_NEW_TWITCH_VODS, payload);
         } catch (sqlError) {
             this.errors = `SQL error creating ${jobTypes.FETCH_NEW_TWITCH_VODS} job`;
-            this.logErrors();
             console.error(sqlError);
         }
 
