@@ -29,6 +29,13 @@ function setJobToFinished(id) {
     return setJobToStatus(id, jobStatusTypes.FINISHED);
 }
 
+function deleteFinishedJobs() {
+    let query = "DELETE FROM jobs WHERE status = $1";
+    let params = [jobStatusTypes.FINISHED];
+
+    return db.query(query, params);
+}
+
 function setJobToStatus(id, status) {
     let query = "UPDATE jobs SET status = $1 WHERE id = $2 RETURNING *";
     let params = [status, id];
@@ -57,5 +64,6 @@ module.exports = {
     setJobToFinished,
     setJobToError,
     setJobToRetry,
+    deleteFinishedJobs,
 };
 

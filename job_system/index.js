@@ -11,7 +11,12 @@ setInterval(() => { twitchJobQueue.run() },  100);
 setInterval(() => { nonApiJobQueue.run() },  100);
 
 logger.info("Initializing CRON jobs");
-const { createFetchNewVods, createCheckVodExistence } = cronJobs;
+const {
+    createFetchNewVods,
+    createCheckVodExistence,
+    deleteFinishedJobsCron
+} = cronJobs;
+
 createFetchNewVods.start();
 createCheckVodExistence.start();
-
+deleteFinishedJobsCron.start();

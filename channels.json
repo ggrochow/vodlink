@@ -1,65 +1,107 @@
 {
   "channels": [
     {
-      "twitch_name": "shiphtur",
-      "lol_accounts": [
-        {
-          "region": "na1",
-          "name": "Shiphtur"
-        }
-      ]
-    },
-    {
-      "twitch_name": "BaLoRi",
-      "lol_accounts": [
-        {
-          "region": "eun1",
-          "name": "BaLoRi"
-        }
-      ]
-    },
-    {
-      "twitch_name": "letkaylescale",
-      "lol_accounts": [
-        {
-          "region": "na1",
-          "name": "Let Kayle Scale"
-        }
-      ]
-    },
-    {
-      "twitch_name": "yamatosdeath1",
+      "twitch_name": "parnstarzilean",
       "lol_accounts": [
         {
           "region": "euw1",
-          "name": "madman 00"
+          "name": "Prnstarzilean909"
         }
       ]
     },
     {
-      "twitch_name": "bobqinxd",
+      "twitch_name": "metasolaray",
       "lol_accounts": [
         {
           "region": "na1",
-          "name": "bobqinXD"
+          "name": "metasolaray"
         }
       ]
     },
     {
-      "twitch_name": "zarotheshacodiana",
+      "twitch_name": "hanjarolol",
+      "lol_accounts": [
+        {
+          "region": "na1",
+          "name": "Twtv Hanjarolol"
+        }
+      ]
+    },
+    {
+      "twitch_name": "elite500",
       "lol_accounts": [
         {
           "region": "euw1",
-          "name": "Glorious Zaro"
+          "name": "Elite500"
         }
       ]
     },
     {
-      "twitch_name": "danijrm",
+      "twitch_name": "arcsecond",
       "lol_accounts": [
         {
           "region": "na1",
-          "name": "Twitchtv Danijrm"
+          "name": "arcsecond"
+        },
+        {
+          "region": "na1",
+          "name": "Arcminute"
+        }
+      ]
+    },
+    {
+      "twitch_name": "nightblue3",
+      "lol_accounts": [
+        {
+          "region": "na1",
+          "name": "Nightblue3"
+        }
+      ]
+    },
+    {
+      "twitch_name": "forestwithin",
+      "lol_accounts": [
+        {
+          "region": "na1",
+          "name": "Forest Within"
+        },
+        {
+          "region": "na1",
+          "name": "warlord gamer13"
+        }
+      ]
+    },
+    {
+      "twitch_name": "quaslol",
+      "lol_accounts": [
+        {
+          "region": "na1",
+          "name": "Dr Quas"
+        },
+        {
+          "region": "na1",
+          "name": "Vonderplanitz"
+        }
+      ]
+    },
+    {
+      "twitch_name": "quinnad",
+      "lol_accounts": [
+        {
+          "region": "na1",
+          "name": "Qwinn"
+        },
+        {
+          "region": "na1",
+          "name": "Quinn ADC"
+        },
+        {
+          "region": "na1",
+          "name": "TwTv QuinnAD"
+        },
+        {
+          "region": "na1",
+          "name": "Quinn DAD"
         }
       ]
     }
