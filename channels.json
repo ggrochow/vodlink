@@ -1,107 +1,33 @@
 {
   "channels": [
     {
-      "twitch_name": "parnstarzilean",
-      "lol_accounts": [
-        {
-          "region": "euw1",
-          "name": "Prnstarzilean909"
-        }
-      ]
-    },
-    {
-      "twitch_name": "metasolaray",
+      "twitch_name": "turkish_coffee",
       "lol_accounts": [
         {
           "region": "na1",
-          "name": "metasolaray"
+          "name": "Turkish Coffee"
         }
       ]
     },
     {
-      "twitch_name": "hanjarolol",
+      "twitch_name": "soulmario",
       "lol_accounts": [
         {
           "region": "na1",
-          "name": "Twtv Hanjarolol"
-        }
-      ]
-    },
-    {
-      "twitch_name": "elite500",
-      "lol_accounts": [
-        {
-          "region": "euw1",
-          "name": "Elite500"
-        }
-      ]
-    },
-    {
-      "twitch_name": "arcsecond",
-      "lol_accounts": [
-        {
-          "region": "na1",
-          "name": "arcsecond"
+          "name": "The Soul Stone"
         },
         {
           "region": "na1",
-          "name": "Arcminute"
+          "name": "The Mind Stone"
         }
       ]
     },
     {
-      "twitch_name": "nightblue3",
+      "twitch_name": "lolparnellyx",
       "lol_accounts": [
         {
           "region": "na1",
-          "name": "Nightblue3"
-        }
-      ]
-    },
-    {
-      "twitch_name": "forestwithin",
-      "lol_accounts": [
-        {
-          "region": "na1",
-          "name": "Forest Within"
-        },
-        {
-          "region": "na1",
-          "name": "warlord gamer13"
-        }
-      ]
-    },
-    {
-      "twitch_name": "quaslol",
-      "lol_accounts": [
-        {
-          "region": "na1",
-          "name": "Dr Quas"
-        },
-        {
-          "region": "na1",
-          "name": "Vonderplanitz"
-        }
-      ]
-    },
-    {
-      "twitch_name": "quinnad",
-      "lol_accounts": [
-        {
-          "region": "na1",
-          "name": "Qwinn"
-        },
-        {
-          "region": "na1",
-          "name": "Quinn ADC"
-        },
-        {
-          "region": "na1",
-          "name": "TwTv QuinnAD"
-        },
-        {
-          "region": "na1",
-          "name": "Quinn DAD"
+          "name": "AIpha WoIf"
         }
       ]
     }

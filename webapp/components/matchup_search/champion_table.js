@@ -28,13 +28,15 @@ const ChampionTable = (props) => {
                     let champInfo = lolData.championById[id];
 
                     return (
-                        <img
-                            key={id}
-                            src={champInfo.imageUrl}
-                            alt={champInfo.name}
-                            title={champInfo.name}
-                            onClick={props.onChampionClick(id)}
-                        />
+                        <span className='imgContainer'>
+                            <img
+                                key={id}
+                                src={champInfo.imageUrl}
+                                alt={champInfo.name}
+                                title={champInfo.name}
+                                onClick={props.onChampionClick(id)}
+                            />
+                        </span>
                     )
                 })}
             </div>
@@ -46,6 +48,11 @@ const ChampionTable = (props) => {
                     flex-wrap: wrap;
                     justify-content: center;
                     align-content: center;
+                }
+                
+                .imgContainer {
+                    height: 75px;
+                    width: 75px;
                 }
                 
                 img {
