@@ -1,4 +1,5 @@
 const db = require('./raw_queries');
+const fullMatchupSearch = require('./full_matchup_search');
 
 /**
  * Get a list of all championIds we have vod links to matches played by that champion for a specific role
@@ -105,4 +106,5 @@ module.exports = {
     getChampionIdsByRole,
     getOpponentChampionIdsByRoleAndOurChampion,
     getVodLinkInfoByMatchUp,
+    fullMatchupSearch: fullMatchupSearch.matchupSearch
 };

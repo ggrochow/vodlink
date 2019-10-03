@@ -18,6 +18,7 @@ function sortByName(a, b) {
 }
 
 const ChampionTable = (props) => {
+    let imageSize = props.imageSize || 75;
     let validChamps = (props.validChamps || championIds).sort(sortByName);
 
     return (
@@ -28,13 +29,12 @@ const ChampionTable = (props) => {
                     let champInfo = lolData.championById[id];
 
                     return (
-                        <span className='imgContainer'>
+                        <span className='imgContainer' key={id}>
                             <img
-                                key={id}
                                 src={champInfo.imageUrl}
                                 alt={champInfo.name}
                                 title={champInfo.name}
-                                onClick={props.onChampionClick(id)}
+                                onClick={props.onChampionClick(+id)}
                             />
                         </span>
                     )
@@ -51,13 +51,13 @@ const ChampionTable = (props) => {
                 }
                 
                 .imgContainer {
-                    height: 75px;
-                    width: 75px;
+                    height: ${imageSize}px;
+                    width: ${imageSize}px;
                 }
                 
                 img {
-                    max-height: 75px;
-                    max-width: 75px;
+                    max-height: ${imageSize}px;
+                    max-width: ${imageSize}px;
                     cursor: pointer;
                 }
 

@@ -1,11 +1,16 @@
 import Head from 'next/head';
 import Footer from "./layout/footer";
+import Header from "./layout/header";
 
 const Layout = props => (
     <div>
         <Head>
             <title>{props.title}</title>
         </Head>
+
+        <div className='header'>
+            <Header/>
+        </div>
 
         <div className='body'>
             {props.children}
@@ -19,11 +24,11 @@ const Layout = props => (
         {/*language=SCSS*/}
         <style jsx>{`
           div.body {
-            min-height: calc(100vh - 150px);
+            min-height: calc(100vh - 200px);
           }
           
           div.footer {
-            height: 100px;
+            height: 50px;
           }
         `}</style>
 

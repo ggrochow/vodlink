@@ -1,9 +1,12 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
+const bodyParser = require('body-parser');
 const db = require('../database');
 const logger = require('../utils/logger');
 const app = express();
+
+const jsonParser = bodyParser.json();
 
 app.use(cors());
 
@@ -48,13 +51,28 @@ app.get('/api/vodLink', (req, res) => {
     // TODO pagination
     db.searchQueries.getVodLinkInfoByMatchUp(role, championId, opponentChampionId)
         .then(data => {
-            res.json(data)
+            res.json(data);
         })
         .catch(err => {
             console.error(err);
             logger.error(err.message);
             res.status(500).end();
         })
+});
+
+app.post('/api/full_matchup_vodlinks', jsonParser, (req, res) => {
+    let body = req.body;
+
+    db.searchQueries.fullMatchupSearch(body)
+        .then(data => {
+            res.json(data);
+        })
+        .catch(err => {
+            console.error(err);
+            logger.error(err.message);
+            res.status(500).end();
+        })
+
 });
 
 
