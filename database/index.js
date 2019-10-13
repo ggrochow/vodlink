@@ -5,8 +5,7 @@ const lolSummoners = require('./lol_summoner');
 const lolMatches = require('./lol_match');
 const lolMatchParticipant = require('./lol_match_participants');
 const lolMatchTwitchVods = require('./lol_match_twitch_vods');
-
-const searchQueries = require('./search_queries');
+const searchQueries = require('./full_matchup_search');
 
 module.exports = {
     jobs,

@@ -1,6 +1,3 @@
-//  TODO: get info by champion id, including links to stuff
-// save dd version
-
 const championById = require('./champion.json');
 
 const rolesByRoleMlRole = {
