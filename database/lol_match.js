@@ -25,9 +25,23 @@ function createNew(nativeMatchId, winningTeam, startedAt, endedAt, region) {
     return db.queryOne(query, params);
 }
 
+function getLolMatchIdsOlderThanTwoMonths() {
+    let query = `select id from lol_matches where started_at < (NOW() - interval '2 month')`;
+
+    return db.query(query);
+}
+
+function deleteByIds(ids) {
+    let query = `DELETE FROM lol_matches WHERE id IN ( $1:list )`;
+    let params = [ids];
+
+    return db.query(query, params);
+}
 
 module.exports = {
     getById,
     getByRegionAndNativeId,
     createNew,
+    getLolMatchIdsOlderThanTwoMonths,
+    deleteByIds,
 };

@@ -10,13 +10,15 @@ setInterval(() => { lolJobQueue.run() },     100);
 setInterval(() => { twitchJobQueue.run() },  100);
 setInterval(() => { nonApiJobQueue.run() },  100);
 
-logger.info("Initializing CRON jobs");
 const {
     createFetchNewVods,
     createCheckVodExistence,
-    deleteFinishedJobsCron
+    deleteFinishedJobsCron,
+    deleteOldLolMatchesCron
 } = cronJobs;
 
+logger.info("Initializing CRON jobs");
 createFetchNewVods.start();
 createCheckVodExistence.start();
 deleteFinishedJobsCron.start();
+deleteOldLolMatchesCron.start();

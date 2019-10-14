@@ -8,9 +8,9 @@ const Layout = props => (
             <title>{props.title}</title>
         </Head>
 
-        <div className='header'>
-            <Header/>
-        </div>
+        {/*<div className='header'>*/}
+        {/*    <Header/>*/}
+        {/*</div>*/}
 
         <div className='body'>
             {props.children}
@@ -24,7 +24,7 @@ const Layout = props => (
         {/*language=SCSS*/}
         <style jsx>{`
           div.body {
-            min-height: calc(100vh - 200px);
+            min-height: calc(100vh - 100px);
           }
           
           div.footer {
