@@ -17,6 +17,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@segment/snippet": "^4.4.0",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "cron": "^1.7.1",
