@@ -6,7 +6,7 @@ const logger = require('../../../utils/logger');
 /**
  * Creates a new CHECK_VOD_EXISTENCE job for each vod in our DB
  *
- * interval: once per day?
+ * interval: once per day
  */
 async function createCheckVodExistenceJobs() {
     logger.verbose('Starting createCheckVodExistenceJobs');

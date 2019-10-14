@@ -1,9 +1,9 @@
 require('dotenv').config();
 
-const db = require('../database');
-const jobTypes = require('../job_system/job_queue/job_types');
+const db = require('../../database');
+const jobTypes = require('../../job_system/job_queue/job_types');
 
-const accountsToAdd = require('../channels.json');
+const accountsToAdd = require('../../channels.json');
 
 
 accountsToAdd.channels.forEach(channelInfo => {

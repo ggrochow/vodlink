@@ -4,8 +4,8 @@
  */
 require('dotenv').config();
 
-const db = require('../database');
-const JOB_TYPES = require('../job_system/job_queue/job_types.js');
+const db = require('../../database');
+const JOB_TYPES = require('../../job_system/job_queue/job_types.js');
 
 const ACCOUNTS = [
     {

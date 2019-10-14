@@ -1,5 +1,5 @@
 import React from 'react';
-import lolData from "../../../lol_data";
+import lolData from "../../../utils/lol_data";
 
 let championIds = Object.keys(lolData.championById);
 

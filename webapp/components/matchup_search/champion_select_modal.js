@@ -2,7 +2,7 @@ import React from 'react';
 import Modal from "../layout/modal";
 import ChampionTable from "./champion_table";
 import {capitalize} from "../../utils";
-import lolData from "../../../lol_data";
+import lolData from "../../../utils/lol_data";
 
 let championIds = Object.keys(lolData.championById);
 

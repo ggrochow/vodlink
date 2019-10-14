@@ -3,7 +3,7 @@ const Job = require('./job');
 const jobTypes = require('../job_types');
 const db = require('../../../database');
 const lolApi = require('../../../external_apis/lol');
-const lolData = require('../../../lol_data');
+const lolData = require('../../../utils/lol_data');
 
 const pythonScriptDirPath = 'python';
 const pythonScriptPath = 'determine_roles.py';
@@ -12,6 +12,8 @@ const pythonPath = process.env.PYTHON_PATH;
 /**
  * Job to determine each participants roles in a LoL match. Needed due to the inaccuracy of api results
  * LoL api role/lane reporting is inaccurate, so we use a python library roleMl to help determine roles
+ * The python script requires two api calls, and breaks that rule for our jobs,
+ * But the script has a sleep after each API call to prevent rate limit hits
  *
  * PAYLOAD: {
  *     matchId:

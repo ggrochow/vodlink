@@ -1,4 +1,4 @@
-const postgrator = require('../utils/postgrator');
+const postgrator = require('../postgrator');
 
 postgrator
     .migrate()

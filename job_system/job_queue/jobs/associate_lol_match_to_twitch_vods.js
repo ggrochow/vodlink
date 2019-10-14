@@ -4,6 +4,7 @@ const moment = require('moment');
 
 /**
  * Job to find all twitch vods that this lol match was played on.
+ * Creates a lolMatchTwitchVod association for each Vod found.
  *
  * PAYLOAD: {
  *      matchId:

@@ -1,4 +1,4 @@
-import lolData from '../../lol_data';
+import lolData from '../../utils/lol_data';
 
 export function lolRoleImageUrl(role) {
     if (role) {

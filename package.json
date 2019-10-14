@@ -7,12 +7,12 @@
     "dev": "next webapp",
     "build": "next build webapp",
     "start": "next start webapp",
-    "create_migration": "node scripts/create_migration.js",
-    "migrate_database": "node scripts/migrate_database.js",
-    "rollback_migration": "node scripts/rollback_database.js",
-    "seed_database": "node scripts/initial_seed.js",
-    "update_champion_json": "node scripts/fetch_champion_json.js",
-    "add_new_twitch_accounts": "node scripts/add_new_twitch_channels.js"
+    "create_migration": "node utils/scripts/create_migration.js",
+    "migrate_database": "node utils/scripts/migrate_database.js",
+    "rollback_migration": "node utils/scripts/rollback_database.js",
+    "seed_database": "node utils/scripts/initial_seed.js",
+    "update_champion_json": "node utils/scripts/fetch_champion_json.js",
+    "add_new_twitch_accounts": "node utils/scripts/add_new_twitch_channels.js"
   },
   "author": "",
   "license": "ISC",
