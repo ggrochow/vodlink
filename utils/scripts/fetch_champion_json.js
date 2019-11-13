@@ -1,6 +1,6 @@
 const fs = require('fs');
 const requestPromise = require('request-promise-native');
-const championJsonPath = 'lol_data/champion.json'; // from project root
+const championJsonPath = 'utils/lol_data/champion.json'; // from project root
 const versionsUrl = 'https://ddragon.leagueoflegends.com/realms/na.json';
 
 

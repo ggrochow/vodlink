@@ -5,7 +5,7 @@ const db = require('../../../database');
 const lolApi = require('../../../external_apis/lol');
 const lolData = require('../../../utils/lol_data');
 
-const pythonScriptDirPath = 'python';
+const pythonScriptDirPath = 'utils/python';
 const pythonScriptPath = 'determine_roles.py';
 const pythonPath = process.env.PYTHON_PATH;
 
