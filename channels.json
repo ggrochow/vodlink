@@ -1,117 +1,17 @@
 {
   "channels": [
     {
-      "twitch_name": "valkrin",
-      "lol_accounts": [
-        {
-          "region": "euw1",
-          "name": "Valkrin on EUW"
-        },
-        {
-          "region": "euw1",
-          "name": "Chewy is Back"
-        }
-      ]
-    },
-    {
-      "twitch_name": "xeptron",
-      "lol_accounts": [
-        {
-          "region": "euw1",
-          "name": "Xeptron"
-        }
-      ]
-    },
-    {
-      "twitch_name": "lourlo",
+      "twitch_name": "yozu",
       "lol_accounts": [
         {
           "region": "na1",
-          "name": "Iourlo"
+          "name": "Yøzu"
         },
         {
           "region": "na1",
-          "name": "olroul"
+          "name": "Emperor of Light"
         }
       ]
-    },
-    {
-      "twitch_name": "wickd",
-      "lol_accounts": [
-        {
-          "region": "euw1",
-          "name": "NordicWicking"
-        }
-      ]
-    },
-    {
-      "twitch_name": "keegunlol",
-      "lol_accounts": [
-        {
-          "region": "na1",
-          "name": "twr"
-        }
-      ]
-    },
-    {
-      "twitch_name": "ipav999",
-      "lol_accounts": [
-        {
-          "region": "na1",
-          "name": "Ivan Pavlov"
-        },
-        {
-          "region": "na1",
-          "name": "iPav"
-        }
-      ]
-    },
-    {
-      "twitch_name": "forestwithin",
-      "lol_accounts": [
-        {
-          "region": "na1",
-          "name": "Forest"
-        }
-      ]
-    },
-    {
-      "twitch_name": "kat_life",
-      "lol_accounts": [
-        {
-          "region": "na1",
-          "name": "kill kat"
-        }
-      ]
-    },
-    {
-      "twitch_name": "yusui",
-      "lol_accounts": [
-        {
-          "region": "na1",
-          "name": "thank u go next"
-        }
-      ]
-    },
-    {
-      "twitch_name": "lolgeranimo",
-      "lol_accounts": [
-        {
-          "region": "na1",
-          "name": "Klondo"
-        },
-        {
-          "region": "na1",
-          "name": "Geraniho"
-        }
-      ]
-    },
-    {
-      "twitch_name": "untara",
-      "lol_accounts": {
-        "region": "kr1",
-        "name": "Ui Jin Park"
-      }
     }
   ]
 }
